@@ -11,7 +11,6 @@ const highlightSquare = (squarePos) => {
     const faceIndex = notationToFaceIndex(squarePos);
     const currentColour = chessBoard.faces[faceIndex].colour;
     chessBoard.faces[faceIndex].colour = "#ff0000";
-    setTimeout(() => { chessBoard.faces[faceIndex].colour = currentColour; }, 1000);
 };
 const squareToGridPosition = (square) => {
     const letterIndexes = ["a", "b", "c", "d", "e", "f", "g", "h"];
@@ -22,4 +21,8 @@ const squareToGridPosition = (square) => {
     const columnPosCentered = columnPos + (50 * chessBoard.scale);
     const rowPosCentered = rowPos + (50 * chessBoard.scale);
     return [columnPosCentered, 0, rowPosCentered];
+};
+const gridCoordinates = (square) => {
+    const piecePosition = squareToGridPosition(square);
+    return [piecePosition[0], 50, piecePosition[2]];
 };

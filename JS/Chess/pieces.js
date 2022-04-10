@@ -4,7 +4,8 @@ const setColour = (body, colour) => {
         body.faces[i].colour = colour;
     }
 };
-//OBJECTS:
+//OBJECTS
+//when building the shape, center on x and z, but not on y, the whole piece should sit on the y-axis
 class SampleObject extends Shape {
     constructor() {
         super();
@@ -61,19 +62,9 @@ const whitePieceColour = "#ffffff";
 const blackPieceColour = "#525252";
 class Piece {
     constructor() {
-        this.chessPosition = "a1";
         this.type = "pawn";
         this.colour = "white";
         this.body = new Shape(); //a reference to an object which will get rendered
-    }
-    updateGridPosition(chessPosition) {
-        if (chessPosition != undefined) {
-            this.chessPosition = chessPosition;
-        }
-        const piecePosition = squareToGridPosition(this.chessPosition);
-        this.body.position.x = piecePosition[0];
-        this.body.position.y = 50;
-        this.body.position.z = piecePosition[2];
     }
     setupObject(scale) {
         this.body.showOutline = true;
@@ -105,3 +96,38 @@ class Rook extends Piece {
         this.setupObject(1);
     }
 }
+//BOARD
+class ChessBoardTop extends Shape {
+    constructor() {
+        super();
+        this.pointMatrix = new matrix();
+        const points = [[0, 0, 0], [100, 0, 0], [100, 0, 100], [0, 0, 100], [0, 0, 200], [100, 0, 200], [100, 0, 300], [0, 0, 300], [0, 0, 400], [100, 0, 400], [100, 0, 500], [0, 0, 500], [0, 0, 600], [100, 0, 600], [100, 0, 700], [0, 0, 700], [0, 0, 800], [100, 0, 800], [200, 0, 0], [300, 0, 0], [300, 0, 100], [200, 0, 100], [200, 0, 200], [300, 0, 200], [300, 0, 300], [200, 0, 300], [200, 0, 400], [300, 0, 400], [300, 0, 500], [200, 0, 500], [200, 0, 600], [300, 0, 600], [300, 0, 700], [200, 0, 700], [200, 0, 800], [300, 0, 800], [400, 0, 0], [500, 0, 0], [500, 0, 100], [400, 0, 100], [400, 0, 200], [500, 0, 200], [500, 0, 300], [400, 0, 300], [400, 0, 400], [500, 0, 400], [500, 0, 500], [400, 0, 500], [400, 0, 600], [500, 0, 600], [500, 0, 700], [400, 0, 700], [400, 0, 800], [500, 0, 800], [600, 0, 0], [700, 0, 0], [700, 0, 100], [600, 0, 100], [600, 0, 200], [700, 0, 200], [700, 0, 300], [600, 0, 300], [600, 0, 400], [700, 0, 400], [700, 0, 500], [600, 0, 500], [600, 0, 600], [700, 0, 600], [700, 0, 700], [600, 0, 700], [600, 0, 800], [700, 0, 800], [800, 0, 0], [800, 0, 100], [800, 0, 200], [800, 0, 300], [800, 0, 400], [800, 0, 500], [800, 0, 600], [800, 0, 700], [800, 0, 800]];
+        for (let i = 0; i != points.length; i += 1) {
+            this.pointMatrix.addColumn(points[i]);
+        }
+        const [centeringX, centeringY, centeringZ] = [-400, 0, -400];
+        this.pointMatrix.translateMatrix(centeringX, centeringY, centeringZ);
+        this.setFaces();
+        this.updateMatrices();
+    }
+    setFaces() {
+        this.faces = [{ pointIndexes: [0, 1, 2, 3], colour: "#c4c4c4" }, { pointIndexes: [1, 18, 21, 2], colour: "#c4c4c4" }, { pointIndexes: [18, 19, 20, 21], colour: "#c4c4c4" }, { pointIndexes: [19, 36, 39, 20], colour: "#c4c4c4" }, { pointIndexes: [36, 37, 38, 39], colour: "#c4c4c4" }, { pointIndexes: [37, 54, 57, 38], colour: "#c4c4c4" }, { pointIndexes: [54, 55, 56, 57], colour: "#c4c4c4" }, { pointIndexes: [55, 72, 73, 56], colour: "#c4c4c4" }, { pointIndexes: [3, 2, 5, 4], colour: "#c4c4c4" }, { pointIndexes: [2, 21, 22, 5], colour: "#c4c4c4" }, { pointIndexes: [21, 20, 23, 22], colour: "#c4c4c4" }, { pointIndexes: [20, 39, 40, 23], colour: "#c4c4c4" }, { pointIndexes: [39, 38, 41, 40], colour: "#c4c4c4" }, { pointIndexes: [38, 57, 58, 41], colour: "#c4c4c4" }, { pointIndexes: [57, 56, 59, 58], colour: "#c4c4c4" }, { pointIndexes: [56, 73, 74, 59], colour: "#c4c4c4" }, { pointIndexes: [4, 5, 6, 7], colour: "#c4c4c4" }, { pointIndexes: [5, 22, 25, 6], colour: "#c4c4c4" }, { pointIndexes: [22, 23, 24, 25], colour: "#c4c4c4" }, { pointIndexes: [23, 40, 43, 24], colour: "#c4c4c4" }, { pointIndexes: [40, 41, 42, 43], colour: "#c4c4c4" }, { pointIndexes: [41, 58, 61, 42], colour: "#c4c4c4" }, { pointIndexes: [58, 59, 60, 61], colour: "#c4c4c4" }, { pointIndexes: [59, 74, 75, 60], colour: "#c4c4c4" }, { pointIndexes: [7, 6, 9, 8], colour: "#c4c4c4" }, { pointIndexes: [6, 25, 26, 9], colour: "#c4c4c4" }, { pointIndexes: [25, 24, 27, 26], colour: "#c4c4c4" }, { pointIndexes: [24, 43, 44, 27], colour: "#c4c4c4" }, { pointIndexes: [43, 42, 45, 44], colour: "#c4c4c4" }, { pointIndexes: [42, 61, 62, 45], colour: "#c4c4c4" }, { pointIndexes: [61, 60, 63, 62], colour: "#c4c4c4" }, { pointIndexes: [60, 75, 76, 63], colour: "#c4c4c4" }, { pointIndexes: [8, 9, 10, 11], colour: "#c4c4c4" }, { pointIndexes: [9, 26, 29, 10], colour: "#c4c4c4" }, { pointIndexes: [26, 27, 28, 29], colour: "#c4c4c4" }, { pointIndexes: [27, 44, 47, 28], colour: "#c4c4c4" }, { pointIndexes: [44, 45, 46, 47], colour: "#c4c4c4" }, { pointIndexes: [45, 62, 65, 46], colour: "#c4c4c4" }, { pointIndexes: [62, 63, 64, 65], colour: "#c4c4c4" }, { pointIndexes: [63, 76, 77, 64], colour: "#c4c4c4" }, { pointIndexes: [11, 10, 13, 12], colour: "#c4c4c4" }, { pointIndexes: [10, 29, 30, 13], colour: "#c4c4c4" }, { pointIndexes: [29, 28, 31, 30], colour: "#c4c4c4" }, { pointIndexes: [28, 47, 48, 31], colour: "#c4c4c4" }, { pointIndexes: [47, 46, 49, 48], colour: "#c4c4c4" }, { pointIndexes: [46, 65, 66, 49], colour: "#c4c4c4" }, { pointIndexes: [65, 64, 67, 66], colour: "#c4c4c4" }, { pointIndexes: [64, 77, 78, 67], colour: "#c4c4c4" }, { pointIndexes: [12, 13, 14, 15], colour: "#c4c4c4" }, { pointIndexes: [13, 30, 33, 14], colour: "#c4c4c4" }, { pointIndexes: [30, 31, 32, 33], colour: "#c4c4c4" }, { pointIndexes: [31, 48, 51, 32], colour: "#c4c4c4" }, { pointIndexes: [48, 49, 50, 51], colour: "#c4c4c4" }, { pointIndexes: [49, 66, 69, 50], colour: "#c4c4c4" }, { pointIndexes: [66, 67, 68, 69], colour: "#c4c4c4" }, { pointIndexes: [67, 78, 79, 68], colour: "#c4c4c4" }, { pointIndexes: [15, 14, 17, 16], colour: "#c4c4c4" }, { pointIndexes: [14, 33, 34, 17], colour: "#c4c4c4" }, { pointIndexes: [33, 32, 35, 34], colour: "#c4c4c4" }, { pointIndexes: [32, 51, 52, 35], colour: "#c4c4c4" }, { pointIndexes: [51, 50, 53, 52], colour: "#c4c4c4" }, { pointIndexes: [50, 69, 70, 53], colour: "#c4c4c4" }, { pointIndexes: [69, 68, 71, 70], colour: "#c4c4c4" }, { pointIndexes: [68, 79, 80, 71], colour: "#c4c4c4" }];
+    }
+}
+const board = {};
+let boardPieces = [];
+const updateBoardPieces = () => {
+    boardPieces = [];
+    for (let key in board) {
+        const currentPiece = board[key];
+        const gridPosition = gridCoordinates(key);
+        currentPiece.body.position = { x: gridPosition[0], y: gridPosition[1], z: gridPosition[2] };
+        boardPieces.push(currentPiece.body);
+    }
+};
+const movePiece = (fromSquare, toSquare) => {
+    const piece = board[fromSquare];
+    delete board[fromSquare];
+    board[toSquare] = piece;
+    updateBoardPieces();
+};
