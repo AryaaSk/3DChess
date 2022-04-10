@@ -115,33 +115,6 @@ const gameLoop = () => {
     };
     let selectedPiece = undefined;
     let avaialableSquares = [];
-    const calculateAvailableMoves = (pieceType, currentSquare, colour) => {
-        var _a;
-        avaialableSquares = [];
-        //ALSO HAVE TO DIFFERENTIATE BETWEEN WHITE AND BLACK, FOR EXAMPLE WHITE PAWN MOVE FORWARD 1, BUT BLACK PAWN WILL MOVE BACKWARD 1 RELATIVE TO WHITE
-        if (pieceType == "pawn") {
-            //can only move 1 forward
-            avaialableSquares.push(`${currentSquare[0]}${Number(currentSquare[1]) + 1}`);
-        }
-        else if (pieceType == "rook") {
-            //can move wherever in a straight line
-            //TODO: IMPLEMENT ROOK MOVEMENT
-        }
-        //check if the moves are valid, invalid if the same colour piece occupies the space
-        let i = 0;
-        while (i != avaialableSquares.length) {
-            if (((_a = board[avaialableSquares[i]]) === null || _a === void 0 ? void 0 : _a.colour) == colour) {
-                avaialableSquares.splice(i, 1);
-            }
-            else {
-                i += 1;
-            }
-        }
-        console.log(`Selected Piece ${pieceType} at ${currentSquare}\nCan move to: ${JSON.stringify(avaialableSquares)}`);
-        for (let i = 0; i != avaialableSquares.length; i += 1) {
-            highlightSquare(avaialableSquares[i]);
-        }
-    };
     document.getElementById("renderingWindow").onclick = ($e) => {
         let clickedSquare = getFaceClicked($e.clientX, $e.clientY);
         ;
@@ -156,7 +129,7 @@ const gameLoop = () => {
         //check if the square is occupied by a piece on the board
         if (selectedPiece == undefined && board[clickedSquare] != undefined) {
             selectedPiece = JSON.parse(JSON.stringify(clickedSquare));
-            calculateAvailableMoves(board[selectedPiece].type, selectedPiece, currentMove);
+            avaialableSquares = calculateAvailableMoves(board[selectedPiece].type, selectedPiece, currentMove);
         }
         else if (selectedPiece != undefined) {
             //the user has selected a piece, and now has chosen to move to another square
@@ -167,10 +140,10 @@ const gameLoop = () => {
                 selectedPiece = undefined;
                 resetBoardColours();
             }
-            else if (board[moveTo] != undefined) { //if there is still a piece at at position on the board then it is another piece from the same team
+            else if (board[moveTo] != undefined) { //if there is still a piece at at position on the board then it is another piece from the same team, so we select that one
                 selectedPiece = moveTo;
                 resetBoardColours();
-                calculateAvailableMoves(board[selectedPiece].type, selectedPiece, currentMove);
+                avaialableSquares = calculateAvailableMoves(board[selectedPiece].type, selectedPiece, currentMove);
             }
         }
     };
