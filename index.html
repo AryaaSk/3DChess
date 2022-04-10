@@ -8,6 +8,7 @@
     <script src="JS/aryaa3D.js"></script>
     <script src="JS/Chess/chessUtilities.js"></script>
     <script src="JS/Chess/pieces.js"></script>
+    <script src="JS/Chess/gameFunctions.js"></script>
     <script src="JS/script.js" defer></script>
 
     <title>3D Chess</title>
@@ -22,9 +23,21 @@
             height: 100vh;
             width: 100vw;
         }
+        #currentMove {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 500px;
+
+            text-align: center;
+            text-transform:capitalize;
+        }
     </style>
 </head>
 <body>
+    <h1 id="currentMove"></h1>
+
     <canvas id="renderingWindow"></canvas>
 </body>
 </html>

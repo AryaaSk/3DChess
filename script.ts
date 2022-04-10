@@ -77,76 +77,45 @@ setInterval(() => {
 
 
 let currentMove = "white";
-const gameLoop = () => {
+document.getElementById("currentMove")!.innerText = `Current Move: ${currentMove}`;
 
-    const faceSquares: string[] = [];
-    const letters = ["a", "b", "c", "d", "e", "f", "g", "h"];
-    const numbers = ["1", "2", "3", "4", "5", "6", "7", "8"];
-    for (let i = 0; i != numbers.length; i += 1) {
-        for (let j = 0; j != letters.length; j += 1) {
-            faceSquares.push(letters[j] + numbers[i]);
-        }
+let selectedPiece: any = undefined;
+let avaialableSquares: string[] = [];
+
+document.getElementById("renderingWindow")!.onclick = ($e) => {
+    let clickedSquare = getFaceClicked($e.clientX, $e.clientY);;
+
+    if (clickedSquare == undefined) { //user clicked outside the board, so we unselect the selectedPiece
+        selectedPiece = undefined; 
+        resetBoardColours(); 
+        document.getElementById("currentMove")!.innerText = `Current Move: ${currentMove}`;
+        return; 
     }
+    else { clickedSquare!; }
 
-    const getFaceClicked = (mouseX: number, mouseY: number) => {
-        const boardFaces: { square: string, center: number[] }[] = [];
-        for (let i = 0; i != chessBoard.faces.length; i += 1) {
-
-            const [p1Index, p2Index, p3Index, p4Index] = [chessBoard.faces[i].pointIndexes[0], chessBoard.faces[i].pointIndexes[1], chessBoard.faces[i].pointIndexes[2], chessBoard.faces[i].pointIndexes[3]]
-            const [p1, p2, p3, p4] = [chessboardPoints.getColumn(p1Index), chessboardPoints.getColumn(p2Index), chessboardPoints.getColumn(p3Index), chessboardPoints.getColumn(p4Index)];
-            //find average of points to get center
-            const [totalX, totalY, totalZ] = [p1[0] + p2[0] + p3[0] + p4[0], p1[1] + p2[1] + p3[1] + p4[1], p1[2] + p2[2] + p3[2] + p4[2]];
-            const [averageX, averageY, averageZ] = [totalX / 4, totalY / 4, totalZ / 4];
-            boardFaces.push( { square: faceSquares[i], center: [averageX, averageY, averageZ] } );
-        }
-
-         //need to convert the clickX and clickY into X and Y coordinates on the grid
-         const gridX = mouseX - (canvasWidth / 2);
-         const gridY = (canvasHeight / 2) - mouseY;
-         const cursorPoint = [gridX, gridY];
- 
-         //now loop through boardFaces, and find the face whose center is closest to the mouse
-         const distanceBetween2D = (p1: number[], p2: number[]) => { return Math.sqrt((p2[0] - p1[0])**2 + (p2[1] - p1[1])**2); }
-         let closestFaceIndex = 0;
-         for (let i = 0; i != boardFaces.length; i += 1) {
-             if (distanceBetween2D(cursorPoint, boardFaces[i].center) < distanceBetween2D(cursorPoint, boardFaces[closestFaceIndex].center)) { closestFaceIndex = i; }
-         }
- 
-         //it will always have a closest point by default (a1), but we don't want to highlight a square when the user didn't mean to click it
-         if (distanceBetween2D(cursorPoint, boardFaces[closestFaceIndex].center) < 100) { return boardFaces[closestFaceIndex].square; }
-         else { return undefined; }
+    //check if the square is occupied by a piece on the board
+    if (selectedPiece == undefined && board[clickedSquare]?.colour == currentMove ) { 
+        selectedPiece = JSON.parse(JSON.stringify(clickedSquare)); 
+        avaialableSquares = calculateAvailableMoves(board[selectedPiece].type, selectedPiece, currentMove);
     }
+    else if (selectedPiece != undefined) {
+        //the user has selected a piece, and now has chosen to move to another square
+        const selectedSquare = JSON.parse(JSON.stringify(clickedSquare));
+        
+        //check whether selectedSquare is an allowedMove by checking if it is in the availableSquares
+        if (avaialableSquares.includes(selectedSquare)) { 
+            movePiece(selectedPiece, selectedSquare);
+            resetBoardColours();
 
-    let selectedPiece: any = undefined;
-    let avaialableSquares: string[] = [];
-
-    document.getElementById("renderingWindow")!.onclick = ($e) => {
-        let clickedSquare = getFaceClicked($e.clientX, $e.clientY);;
-        if (clickedSquare == undefined) { selectedPiece = undefined; resetBoardColours(); return; }
-        else { clickedSquare!; }
-
-        //check if the square is occupied by a piece on the board
-        if (selectedPiece == undefined && board[clickedSquare] != undefined) { 
-            selectedPiece = JSON.parse(JSON.stringify(clickedSquare)); 
+            selectedPiece = undefined;
+            if (currentMove == "white") { currentMove = "black"; }
+            else { currentMove = "white"; }
+            document.getElementById("currentMove")!.innerText = `Current Move: ${currentMove}`;
+        }
+        else if ( board[selectedSquare] != undefined ) { //if it is not in the availableSquares, but there is still a piece there, it means that the user is trying to select another piece
+            selectedPiece = selectedSquare; 
+            resetBoardColours();
             avaialableSquares = calculateAvailableMoves(board[selectedPiece].type, selectedPiece, currentMove);
         }
-        else if (selectedPiece != undefined) {
-            //the user has selected a piece, and now has chosen to move to another square
-            const moveTo = JSON.parse(JSON.stringify(clickedSquare));
-            
-            //check whether moveTo is an allowedMove
-            if (avaialableSquares.includes(moveTo)) { 
-                movePiece(selectedPiece, moveTo);
-                selectedPiece = undefined;
-                resetBoardColours();
-            }
-            else if ( board[moveTo] != undefined ) { //if there is still a piece at at position on the board then it is another piece from the same team, so we select that one
-                selectedPiece = moveTo; 
-                resetBoardColours();
-                avaialableSquares = calculateAvailableMoves(board[selectedPiece].type, selectedPiece, currentMove);
-            }
-        }
     }
-
 }
-gameLoop();

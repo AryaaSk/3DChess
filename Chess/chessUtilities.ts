@@ -29,26 +29,3 @@ const gridCoordinates = (square: string) => {
     const piecePosition = squareToGridPosition(square);
     return [piecePosition[0], 50, piecePosition[2]]
 }
-
-const calculateAvailableMoves = (pieceType: string, currentSquare: string, colour: string) => {
-    const avaialableSquares = [];
-
-    //ALSO HAVE TO DIFFERENTIATE BETWEEN WHITE AND BLACK, FOR EXAMPLE WHITE PAWN MOVE FORWARD 1, BUT BLACK PAWN WILL MOVE BACKWARD 1 RELATIVE TO WHITE
-
-    if (pieceType == "pawn") {
-        //can only move 1 forward
-        avaialableSquares.push(`${currentSquare[0]}${Number(currentSquare[1]) + 1}`);
-    }
-    else if (pieceType == "rook") {
-        //can move wherever in a straight line
-        //TODO: IMPLEMENT ROOK MOVEMENT
-    }
-
-    //check if the moves are valid, invalid if the same colour piece occupies the space
-    let i = 0; while (i != avaialableSquares.length) { if (board[avaialableSquares[i]]?.colour == colour) { avaialableSquares.splice(i, 1); } else { i += 1; } }
-    
-    console.log(`Selected Piece ${pieceType} at ${currentSquare}\nCan move to: ${JSON.stringify(avaialableSquares)}`);
-    for (let i = 0; i != avaialableSquares.length; i += 1) { highlightSquare(avaialableSquares[i]); }
-
-    return avaialableSquares;
-}
