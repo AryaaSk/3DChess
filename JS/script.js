@@ -59,40 +59,43 @@ for (let i = 0; i != 64; i += 1) {
     }
 }
 //Pieces
-const pieces = [];
-const [wPawn1, wPawn2, wPawn3, wPawn4, wPawn5, wPawn6, wPawn7, wPawn8] = [new Pawn("white"), new Pawn("white"), new Pawn("white"), new Pawn("white"), new Pawn("white"), new Pawn("white"), new Pawn("white"), new Pawn("white")];
-wPawn1.updateGridPosition("a2");
-wPawn2.updateGridPosition("b2");
-wPawn3.updateGridPosition("c2");
-wPawn4.updateGridPosition("d2");
-wPawn5.updateGridPosition("e2");
-wPawn6.updateGridPosition("f2");
-wPawn7.updateGridPosition("g2");
-wPawn8.updateGridPosition("h2");
-pieces.push(wPawn1.body, wPawn2.body, wPawn3.body, wPawn4.body, wPawn5.body, wPawn6.body, wPawn7.body, wPawn8.body);
-const [bPawn1, bPawn2, bPawn3, bPawn4, bPawn5, bPawn6, bPawn7, bPawn8] = [new Pawn("black"), new Pawn("black"), new Pawn("black"), new Pawn("black"), new Pawn("black"), new Pawn("black"), new Pawn("black"), new Pawn("black")];
-bPawn1.updateGridPosition("a7");
-bPawn2.updateGridPosition("b7");
-bPawn3.updateGridPosition("c7");
-bPawn4.updateGridPosition("d7");
-bPawn5.updateGridPosition("e7");
-bPawn6.updateGridPosition("f7");
-bPawn7.updateGridPosition("g7");
-bPawn8.updateGridPosition("h7");
-pieces.push(bPawn1.body, bPawn2.body, bPawn3.body, bPawn4.body, bPawn5.body, bPawn6.body, bPawn7.body, bPawn8.body);
-const [wRook1, wRook2] = [new Rook("white"), new Rook("white")];
-wRook1.updateGridPosition("a1");
-wRook2.updateGridPosition("h1");
-pieces.push(wRook1.body, wRook2.body);
-const [bRook1, bRook2] = [new Rook("black"), new Rook("black")];
-bRook1.updateGridPosition("a8");
-bRook2.updateGridPosition("h8");
-pieces.push(bRook1.body, bRook2.body);
+const board = {};
+board["a2"] = new Pawn("white");
+board["b2"] = new Pawn("white");
+board["c2"] = new Pawn("white");
+board["d2"] = new Pawn("white");
+board["e2"] = new Pawn("white");
+board["f2"] = new Pawn("white");
+board["g2"] = new Pawn("white");
+board["h2"] = new Pawn("white");
+board["a7"] = new Pawn("black");
+board["b7"] = new Pawn("black");
+board["c7"] = new Pawn("black");
+board["d7"] = new Pawn("black");
+board["e7"] = new Pawn("black");
+board["f7"] = new Pawn("black");
+board["g7"] = new Pawn("black");
+board["h7"] = new Pawn("black");
+board["a1"] = new Rook("white");
+board["h1"] = new Rook("white");
+board["a8"] = new Rook("black");
+board["h8"] = new Rook("black");
+let boardPieces = [];
+const updateBoardPieces = () => {
+    boardPieces = [];
+    for (let key in board) {
+        const currentPiece = board[key];
+        currentPiece.chessPosition = key;
+        currentPiece.updateGridPosition();
+        boardPieces.push(currentPiece.body);
+    }
+};
+updateBoardPieces();
 setInterval(() => {
     clearCanvas();
-    camera.renderGrid();
+    //camera.renderGrid();
     camera.render([chessBoardBody, chessBoard]);
-    camera.render(pieces); //pieces are always on top of board, which is why I limit rotation, in the future I should combine all objects into 1 when rendering
+    camera.render(boardPieces); //pieces are always on top of board, which is why I limit rotation, in the future I should combine all objects into 1 when rendering
 });
 document.onkeydown = ($e) => {
     const key = $e.key.toLowerCase();
@@ -100,4 +103,7 @@ document.onkeydown = ($e) => {
         const square = prompt("What square do you want to highlight");
         highlightSquare(square);
     }
+};
+let currentMove = "white";
+const gameLoop = () => {
 };

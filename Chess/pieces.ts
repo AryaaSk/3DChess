@@ -5,6 +5,26 @@ const setColour = (body: Shape, colour: string) => {
 }
 
 //OBJECTS:
+class SampleObject extends Shape {
+    constructor () {
+        super();
+
+        this.pointMatrix = new matrix();
+        const points = [[0,0,0],[100,0,0],[50,0,100],[50,100,50]];
+        for (let i = 0; i != points.length; i += 1)
+        { this.pointMatrix.addColumn(points[i]); }
+
+        const [centeringX, centeringY, centeringZ] = [-50, 0, -50];
+        this.pointMatrix.translateMatrix(centeringX, centeringY, centeringZ);
+
+        this.setFaces();
+        this.updateMatrices();
+    }
+    setFaces() {
+        this.faces = [{pointIndexes:[0,1,2],colour:"#ff0000"},{pointIndexes:[0,1,3],colour:"#ff9300"},{pointIndexes:[1,2,3],colour:"#00f900"},{pointIndexes:[2,3,0],colour:"#0433ff"}];
+    }
+}
+
 class PawnObject extends Shape {
     constructor () {
         super();
@@ -49,10 +69,11 @@ class RookObject extends Shape {
 //Piece Classes
 const whitePieceColour = "#ffffff";
 const blackPieceColour = "#525252";
+
 class Piece {
     chessPosition: string = "a1";
+    type: string = "pawn";
     colour: string = "white";
-
     body: Shape = new Shape(); //a reference to an object which will get rendered
 
     updateGridPosition(chessPosition?: string) { //when building the shape, center on x and z, but not on y, the whole piece should sit on the y-axis
@@ -62,20 +83,25 @@ class Piece {
         this.body.position.y = 50;
         this.body.position.z = piecePosition[2];
     }
+
+    setupObject(scale: number) {
+        this.body.showOutline = true;
+        this.body.scale = scale;
+        this.body.updateMatrices();
+
+        if (this.colour == "white") { setColour(this.body, whitePieceColour); }
+        else if (this.colour == "black") { setColour(this.body, blackPieceColour) }
+    }
 }
 
 class Pawn extends Piece {
     constructor (colour: string) {
         super();
 
+        this.type = "pawn";
         this.body = new PawnObject();
-        this.body.showOutline = true;
-        this.body.scale = 0.8;
-        this.body.updateMatrices();
-
         this.colour = colour;
-        if (this.colour == "white") { setColour(this.body, whitePieceColour); }
-        else if (this.colour == "black") { setColour(this.body, blackPieceColour) }
+        this.setupObject(0.8);
     }
 }
 
@@ -83,13 +109,9 @@ class Rook extends Piece {
     constructor (colour: string) {
         super();
 
+        this.type = "rook";
         this.body = new RookObject();
-        this.body.showOutline = true;
-        this.body.scale = 1;
-        this.body.updateMatrices();
-
         this.colour = colour;
-        if (this.colour == "white") { setColour(this.body, whitePieceColour); }
-        else if (this.colour == "black") { setColour(this.body, blackPieceColour) }
+        this.setupObject(1);
     }
 }
