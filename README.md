@@ -55,8 +55,8 @@ I also had to model the chess board itself, which is just a box and then a custo
 
 This is what the Queen and ChessboardTop look like in the Shape Builder, there is no colour since the colour is added dynamically based on the colour of the piece in the game:
 <p float="left">
-  <img src="https://github.com/AryaaSk/3DChess/blob/master/Previews/Queen.png?raw=true" width="300"/>
-  <img src="https://github.com/AryaaSk/3DChess/blob/master/Previews/ChessboardTop.png?raw=true" width="600"/>
+  <img src="https://github.com/AryaaSk/3DChess/blob/master/Previews/Queen.png?raw=true" width="250"/>
+  <img src="https://github.com/AryaaSk/3DChess/blob/master/Previews/ChessboardTop.png?raw=true" width="500"/>
 </p>
 
 ## Performace
