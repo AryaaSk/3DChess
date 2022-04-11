@@ -250,7 +250,6 @@ const updateBoardPieces = () => { //call this everytime there is a change on the
 }
 
 const movePiece = (fromSquare: string, toSquare: string) => {
-    console.log(`Moved piece ${fromSquare} to ${toSquare}`);
     const piece = board[fromSquare];
     delete board[fromSquare];
     board[toSquare] = piece;

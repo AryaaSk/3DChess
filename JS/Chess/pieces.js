@@ -217,7 +217,6 @@ const updateBoardPieces = () => {
     }
 };
 const movePiece = (fromSquare, toSquare) => {
-    console.log(`Moved piece ${fromSquare} to ${toSquare}`);
     const piece = board[fromSquare];
     delete board[fromSquare];
     board[toSquare] = piece;
