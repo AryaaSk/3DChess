@@ -1,37 +1,4 @@
 "use strict";
-const calculateAvailableMoves = (pieceType, currentSquare, colour) => {
-    var _a;
-    const avaialableSquares = [];
-    //ALSO HAVE TO DIFFERENTIATE BETWEEN WHITE AND BLACK, FOR EXAMPLE WHITE PAWN MOVE FORWARD 1, BUT BLACK PAWN WILL MOVE BACKWARD 1 RELATIVE TO WHITE
-    if (pieceType == "pawn") {
-        //can only move 1 forward
-        if (colour == "white") {
-            avaialableSquares.push(`${currentSquare[0]}${Number(currentSquare[1]) + 1}`);
-        }
-        else if (colour == "black") {
-            avaialableSquares.push(`${currentSquare[0]}${Number(currentSquare[1]) - 1}`);
-        }
-    }
-    else if (pieceType == "rook") {
-        //can move wherever in a straight line
-        //TODO: IMPLEMENT ROOK MOVEMENT
-    }
-    //check if the moves are valid, invalid if the same colour piece occupies the space
-    let i = 0;
-    while (i != avaialableSquares.length) {
-        if (((_a = board[avaialableSquares[i]]) === null || _a === void 0 ? void 0 : _a.colour) == colour) {
-            avaialableSquares.splice(i, 1);
-        }
-        else {
-            i += 1;
-        }
-    }
-    document.getElementById("currentMove").innerText = `${colour} selected ${pieceType} at ${currentSquare}\nCan move to: ${JSON.stringify(avaialableSquares)}`;
-    for (let i = 0; i != avaialableSquares.length; i += 1) {
-        highlightSquare(avaialableSquares[i]);
-    }
-    return avaialableSquares;
-};
 const faceSquares = [];
 const letters = ["a", "b", "c", "d", "e", "f", "g", "h"];
 const numbers = ["1", "2", "3", "4", "5", "6", "7", "8"];
@@ -69,4 +36,247 @@ const getFaceClicked = (mouseX, mouseY) => {
     else {
         return undefined;
     }
+};
+const movedSquare = (square, vertical, horizontal) => {
+    //relative to white, e.g. vertical +2, and horizontal +2 from a1 would be c3
+    const letterIndex = letters.indexOf(square[0]) + horizontal;
+    const numberIndex = numbers.indexOf(square[1]) + vertical;
+    const newSquare = letters[letterIndex] + numbers[numberIndex];
+    //check if new square is contained in face squares
+    if (faceSquares.includes(newSquare)) {
+        return newSquare;
+    }
+    else {
+        return undefined;
+    }
+};
+const calculateAvailableMoves = (pieceType, currentSquare, colour) => {
+    var _a;
+    const avaialableSquares = [];
+    //ALSO HAVE TO DIFFERENTIATE BETWEEN WHITE AND BLACK, FOR EXAMPLE WHITE PAWN MOVE FORWARD 1, BUT BLACK PAWN WILL MOVE BACKWARD 1 RELATIVE TO WHITE
+    if (pieceType == "pawn") {
+        //can only move 1 forward
+        if (colour == "white") {
+            avaialableSquares.push(movedSquare(currentSquare, 1, 0));
+        }
+        else if (colour == "black") {
+            avaialableSquares.push(movedSquare(currentSquare, -1, 0));
+        }
+    }
+    else if (pieceType == "rook") {
+        //can move wherever in a straight line
+        //all movement are relative to white
+        let [vertical, horizontal] = [0, 0];
+        let newSquare = JSON.parse(JSON.stringify(currentSquare));
+        while (newSquare != undefined) { //moving forward until you hit edge of board
+            newSquare = movedSquare(currentSquare, vertical, horizontal);
+            avaialableSquares.push(newSquare);
+            if (board[newSquare] != undefined && newSquare != currentSquare) {
+                break;
+            }
+            vertical += 1;
+        }
+        [vertical, horizontal] = [0, 0];
+        newSquare = JSON.parse(JSON.stringify(currentSquare));
+        while (newSquare != undefined) { //moving backward until you hit edge of board
+            newSquare = movedSquare(currentSquare, vertical, horizontal);
+            avaialableSquares.push(newSquare);
+            if (board[newSquare] != undefined && newSquare != currentSquare) {
+                break;
+            }
+            vertical -= 1;
+        }
+        [vertical, horizontal] = [0, 0];
+        newSquare = JSON.parse(JSON.stringify(currentSquare));
+        while (newSquare != undefined) { //moving left until you hit edge of board
+            newSquare = movedSquare(currentSquare, vertical, horizontal);
+            avaialableSquares.push(newSquare);
+            if (board[newSquare] != undefined && newSquare != currentSquare) {
+                break;
+            }
+            horizontal -= 1;
+        }
+        [vertical, horizontal] = [0, 0];
+        newSquare = JSON.parse(JSON.stringify(currentSquare));
+        while (newSquare != undefined) { //moving right until you hit edge of board
+            newSquare = movedSquare(currentSquare, vertical, horizontal);
+            avaialableSquares.push(newSquare);
+            if (board[newSquare] != undefined && newSquare != currentSquare) {
+                break;
+            }
+            horizontal += 1;
+        }
+    }
+    else if (pieceType == "knight") {
+        //knight moves in an L shape, so he has 8 moves in total, we don't check for undefined here, that gets filtered out at the end
+        avaialableSquares.push(movedSquare(currentSquare, 2, 1));
+        avaialableSquares.push(movedSquare(currentSquare, 2, -1));
+        avaialableSquares.push(movedSquare(currentSquare, 1, 2));
+        avaialableSquares.push(movedSquare(currentSquare, -1, 2));
+        avaialableSquares.push(movedSquare(currentSquare, -2, 1));
+        avaialableSquares.push(movedSquare(currentSquare, -2, -1));
+        avaialableSquares.push(movedSquare(currentSquare, 1, -2));
+        avaialableSquares.push(movedSquare(currentSquare, -1, -2));
+    }
+    else if (pieceType == "bishop") {
+        //can move wherever in a diagonal line
+        let [vertical, horizontal] = [0, 0];
+        let newSquare = JSON.parse(JSON.stringify(currentSquare));
+        while (newSquare != undefined) { //forward-left
+            newSquare = movedSquare(currentSquare, vertical, horizontal);
+            avaialableSquares.push(newSquare);
+            if (board[newSquare] != undefined && newSquare != currentSquare) {
+                break;
+            }
+            vertical += 1;
+            horizontal -= 1;
+        }
+        [vertical, horizontal] = [0, 0];
+        newSquare = JSON.parse(JSON.stringify(currentSquare));
+        while (newSquare != undefined) { //forward-right
+            newSquare = movedSquare(currentSquare, vertical, horizontal);
+            avaialableSquares.push(newSquare);
+            if (board[newSquare] != undefined && newSquare != currentSquare) {
+                break;
+            }
+            vertical += 1;
+            horizontal += 1;
+        }
+        [vertical, horizontal] = [0, 0];
+        newSquare = JSON.parse(JSON.stringify(currentSquare));
+        while (newSquare != undefined) { //backward-left
+            newSquare = movedSquare(currentSquare, vertical, horizontal);
+            avaialableSquares.push(newSquare);
+            if (board[newSquare] != undefined && newSquare != currentSquare) {
+                break;
+            }
+            vertical -= 1;
+            horizontal -= 1;
+        }
+        [vertical, horizontal] = [0, 0];
+        newSquare = JSON.parse(JSON.stringify(currentSquare));
+        while (newSquare != undefined) { //backward-right
+            newSquare = movedSquare(currentSquare, vertical, horizontal);
+            avaialableSquares.push(newSquare);
+            if (board[newSquare] != undefined && newSquare != currentSquare) {
+                break;
+            }
+            vertical -= 1;
+            horizontal += 1;
+        }
+    }
+    else if (pieceType == "queen") {
+        //just combine rook and bishop's movement
+        let [vertical, horizontal] = [0, 0];
+        let newSquare = JSON.parse(JSON.stringify(currentSquare));
+        while (newSquare != undefined) { //moving forward until you hit edge of board
+            newSquare = movedSquare(currentSquare, vertical, horizontal);
+            avaialableSquares.push(newSquare);
+            if (board[newSquare] != undefined && newSquare != currentSquare) {
+                break;
+            }
+            vertical += 1;
+        }
+        [vertical, horizontal] = [0, 0];
+        newSquare = JSON.parse(JSON.stringify(currentSquare));
+        while (newSquare != undefined) { //moving backward until you hit edge of board
+            newSquare = movedSquare(currentSquare, vertical, horizontal);
+            avaialableSquares.push(newSquare);
+            if (board[newSquare] != undefined && newSquare != currentSquare) {
+                break;
+            }
+            vertical -= 1;
+        }
+        [vertical, horizontal] = [0, 0];
+        newSquare = JSON.parse(JSON.stringify(currentSquare));
+        while (newSquare != undefined) { //moving left until you hit edge of board
+            newSquare = movedSquare(currentSquare, vertical, horizontal);
+            avaialableSquares.push(newSquare);
+            if (board[newSquare] != undefined && newSquare != currentSquare) {
+                break;
+            }
+            horizontal -= 1;
+        }
+        [vertical, horizontal] = [0, 0];
+        newSquare = JSON.parse(JSON.stringify(currentSquare));
+        while (newSquare != undefined) { //moving right until you hit edge of board
+            newSquare = movedSquare(currentSquare, vertical, horizontal);
+            avaialableSquares.push(newSquare);
+            if (board[newSquare] != undefined && newSquare != currentSquare) {
+                break;
+            }
+            horizontal += 1;
+        }
+        [vertical, horizontal] = [0, 0];
+        newSquare = JSON.parse(JSON.stringify(currentSquare));
+        while (newSquare != undefined) { //forward-left
+            newSquare = movedSquare(currentSquare, vertical, horizontal);
+            avaialableSquares.push(newSquare);
+            if (board[newSquare] != undefined && newSquare != currentSquare) {
+                break;
+            }
+            vertical += 1;
+            horizontal -= 1;
+        }
+        [vertical, horizontal] = [0, 0];
+        newSquare = JSON.parse(JSON.stringify(currentSquare));
+        while (newSquare != undefined) { //forward-right
+            newSquare = movedSquare(currentSquare, vertical, horizontal);
+            avaialableSquares.push(newSquare);
+            if (board[newSquare] != undefined && newSquare != currentSquare) {
+                break;
+            }
+            vertical += 1;
+            horizontal += 1;
+        }
+        [vertical, horizontal] = [0, 0];
+        newSquare = JSON.parse(JSON.stringify(currentSquare));
+        while (newSquare != undefined) { //backward-left
+            newSquare = movedSquare(currentSquare, vertical, horizontal);
+            avaialableSquares.push(newSquare);
+            if (board[newSquare] != undefined && newSquare != currentSquare) {
+                break;
+            }
+            vertical -= 1;
+            horizontal -= 1;
+        }
+        [vertical, horizontal] = [0, 0];
+        newSquare = JSON.parse(JSON.stringify(currentSquare));
+        while (newSquare != undefined) { //backward-right
+            newSquare = movedSquare(currentSquare, vertical, horizontal);
+            avaialableSquares.push(newSquare);
+            if (board[newSquare] != undefined && newSquare != currentSquare) {
+                break;
+            }
+            vertical -= 1;
+            horizontal += 1;
+        }
+    }
+    else if (pieceType == "king") {
+        //can move in any direction, but only once, will add moves similar to knight, which then get filtered later
+        avaialableSquares.push(movedSquare(currentSquare, 1, 0));
+        avaialableSquares.push(movedSquare(currentSquare, 1, 1));
+        avaialableSquares.push(movedSquare(currentSquare, 0, 1));
+        avaialableSquares.push(movedSquare(currentSquare, -1, 1));
+        avaialableSquares.push(movedSquare(currentSquare, -1, 0));
+        avaialableSquares.push(movedSquare(currentSquare, -1, -1));
+        avaialableSquares.push(movedSquare(currentSquare, 0, -1));
+        avaialableSquares.push(movedSquare(currentSquare, 1, -1));
+    }
+    //check if the moves are valid, invalid if the same colour piece occupies the space
+    let i = 0;
+    while (i != avaialableSquares.length) {
+        if (((_a = board[avaialableSquares[i]]) === null || _a === void 0 ? void 0 : _a.colour) == colour || avaialableSquares[i] == undefined) {
+            avaialableSquares.splice(i, 1);
+        }
+        else {
+            i += 1;
+        }
+    }
+    document.getElementById("currentMove").innerText = `${colour} selected ${pieceType} at ${currentSquare}\nCan move to: ${JSON.stringify(avaialableSquares)}`;
+    for (let i = 0; i != avaialableSquares.length; i += 1) {
+        highlightSquare(avaialableSquares[i], "#ff0000");
+    }
+    highlightSquare(currentSquare, "#87ceeb");
+    return avaialableSquares;
 };

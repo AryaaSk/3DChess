@@ -60,9 +60,21 @@ board["g7"] = new Pawn("black");
 board["h7"] = new Pawn("black");
 
 board["a1"] = new Rook("white");
+board["b1"] = new Knight("white");
+board["c1"] = new Bishop("white");
+board["d1"] = new Queen("white");
+board["e1"] = new King("white");
+board["f1"] = new Bishop("white");
+board["g1"] = new Knight("white");
 board["h1"] = new Rook("white");
 
 board["a8"] = new Rook("black");
+board["b8"] = new Knight("black");
+board["c8"] = new Bishop("black");
+board["d8"] = new Queen("black");
+board["e8"] = new King("black");
+board["f8"] = new Bishop("black");
+board["g8"] = new Knight("black");
 board["h8"] = new Rook("black");
 updateBoardPieces();
 
@@ -77,7 +89,8 @@ setInterval(() => {
 
 
 let currentMove = "white";
-document.getElementById("currentMove")!.innerText = `Current Move: ${currentMove}`;
+const updateCurrentMove = () => { document.getElementById("currentMove")!.innerText = `Current Move: ${currentMove}`; }
+updateCurrentMove();
 
 let selectedPiece: any = undefined;
 let avaialableSquares: string[] = [];
@@ -88,7 +101,7 @@ document.getElementById("renderingWindow")!.onclick = ($e) => {
     if (clickedSquare == undefined) { //user clicked outside the board, so we unselect the selectedPiece
         selectedPiece = undefined; 
         resetBoardColours(); 
-        document.getElementById("currentMove")!.innerText = `Current Move: ${currentMove}`;
+        updateCurrentMove();
         return; 
     }
     else { clickedSquare!; }
@@ -110,9 +123,9 @@ document.getElementById("renderingWindow")!.onclick = ($e) => {
             selectedPiece = undefined;
             if (currentMove == "white") { currentMove = "black"; }
             else { currentMove = "white"; }
-            document.getElementById("currentMove")!.innerText = `Current Move: ${currentMove}`;
+            updateCurrentMove();
         }
-        else if ( board[selectedSquare] != undefined ) { //if it is not in the availableSquares, but there is still a piece there, it means that the user is trying to select another piece
+        else if ( board[selectedSquare] != undefined && board[selectedSquare].colour == currentMove ) { //if it is not in the availableSquares, but there is still a piece there, it means that the user is trying to select another piece
             selectedPiece = selectedSquare; 
             resetBoardColours();
             avaialableSquares = calculateAvailableMoves(board[selectedPiece].type, selectedPiece, currentMove);

@@ -7,10 +7,9 @@ const notationToFaceIndex = (notation) => {
     const faceIndex = (row * 8) + column;
     return faceIndex;
 };
-const highlightSquare = (squarePos) => {
+const highlightSquare = (squarePos, colour) => {
     const faceIndex = notationToFaceIndex(squarePos);
-    const currentColour = chessBoard.faces[faceIndex].colour;
-    chessBoard.faces[faceIndex].colour = "#ff0000";
+    chessBoard.faces[faceIndex].colour = colour;
 };
 const squareToGridPosition = (square) => {
     const letterIndexes = ["a", "b", "c", "d", "e", "f", "g", "h"];

@@ -62,8 +62,20 @@ board["f7"] = new Pawn("black");
 board["g7"] = new Pawn("black");
 board["h7"] = new Pawn("black");
 board["a1"] = new Rook("white");
+board["b1"] = new Knight("white");
+board["c1"] = new Bishop("white");
+board["d1"] = new Queen("white");
+board["e1"] = new King("white");
+board["f1"] = new Bishop("white");
+board["g1"] = new Knight("white");
 board["h1"] = new Rook("white");
 board["a8"] = new Rook("black");
+board["b8"] = new Knight("black");
+board["c8"] = new Bishop("black");
+board["d8"] = new Queen("black");
+board["e8"] = new King("black");
+board["f8"] = new Bishop("black");
+board["g8"] = new Knight("black");
 board["h8"] = new Rook("black");
 updateBoardPieces();
 let chessboardPoints = new matrix();
@@ -74,7 +86,8 @@ setInterval(() => {
     camera.render(boardPieces); //pieces are always on top of board, which is why I limit rotation, in the future I should combine all objects into 1 when rendering
 });
 let currentMove = "white";
-document.getElementById("currentMove").innerText = `Current Move: ${currentMove}`;
+const updateCurrentMove = () => { document.getElementById("currentMove").innerText = `Current Move: ${currentMove}`; };
+updateCurrentMove();
 let selectedPiece = undefined;
 let avaialableSquares = [];
 document.getElementById("renderingWindow").onclick = ($e) => {
@@ -84,7 +97,7 @@ document.getElementById("renderingWindow").onclick = ($e) => {
     if (clickedSquare == undefined) { //user clicked outside the board, so we unselect the selectedPiece
         selectedPiece = undefined;
         resetBoardColours();
-        document.getElementById("currentMove").innerText = `Current Move: ${currentMove}`;
+        updateCurrentMove();
         return;
     }
     else {
@@ -109,9 +122,9 @@ document.getElementById("renderingWindow").onclick = ($e) => {
             else {
                 currentMove = "white";
             }
-            document.getElementById("currentMove").innerText = `Current Move: ${currentMove}`;
+            updateCurrentMove();
         }
-        else if (board[selectedSquare] != undefined) { //if it is not in the availableSquares, but there is still a piece there, it means that the user is trying to select another piece
+        else if (board[selectedSquare] != undefined && board[selectedSquare].colour == currentMove) { //if it is not in the availableSquares, but there is still a piece there, it means that the user is trying to select another piece
             selectedPiece = selectedSquare;
             resetBoardColours();
             avaialableSquares = calculateAvailableMoves(board[selectedPiece].type, selectedPiece, currentMove);

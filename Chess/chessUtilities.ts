@@ -7,10 +7,9 @@ const notationToFaceIndex = (notation: string) => {
     const faceIndex = (row * 8) + column;
     return faceIndex
 }
-const highlightSquare = (squarePos: string) => {
+const highlightSquare = (squarePos: string, colour: string) => {
     const faceIndex = notationToFaceIndex(squarePos);
-    const currentColour = chessBoard.faces[faceIndex].colour;
-    chessBoard.faces[faceIndex].colour = "#ff0000";
+    chessBoard.faces[faceIndex].colour = colour;
 }
 const squareToGridPosition = (square: string) => { //based on the assumption that the chess board is always in the center of the grid
     const letterIndexes = ["a", "b", "c", "d", "e", "f", "g", "h"];

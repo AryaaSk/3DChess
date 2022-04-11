@@ -25,6 +25,44 @@ class SampleObject extends Shape {
         this.faces = [{pointIndexes:[0,1,2],colour:"#ff0000"},{pointIndexes:[0,1,3],colour:"#ff9300"},{pointIndexes:[1,2,3],colour:"#00f900"},{pointIndexes:[2,3,0],colour:"#0433ff"}];
     }
 }
+class SampleObject2 extends Shape {
+    constructor () {
+        super();
+
+        this.pointMatrix = new matrix();
+        const points = [[0,0,0],[60,0,0],[60,0,60],[0,0,60],[0,100,0],[60,100,0],[60,100,60],[0,100,60]];
+        for (let i = 0; i != points.length; i += 1)
+        { this.pointMatrix.addColumn(points[i]); }
+
+        const [centeringX, centeringY, centeringZ] = [-30, 0, -30];
+        this.pointMatrix.translateMatrix(centeringX, centeringY, centeringZ);
+
+        this.setFaces();
+        this.updateMatrices();
+    }
+    setFaces() {
+        this.faces = [{pointIndexes:[0,1,2,3],colour:"#c4c4c4"},{pointIndexes:[4,5,1,0],colour:"#c4c4c4"},{pointIndexes:[5,6,2,1],colour:"#c4c4c4"},{pointIndexes:[6,7,3,2],colour:"#c4c4c4"},{pointIndexes:[7,4,0,3],colour:"#c4c4c4"},{pointIndexes:[4,5,6,7],colour:"#c4c4c4"}];
+    }
+}
+class SampleObject3 extends Shape {
+    constructor () {
+        super();
+
+        this.pointMatrix = new matrix();
+        const points = [[0,0,0],[60,0,0],[60,0,60],[0,0,60],[30,110,30]];
+        for (let i = 0; i != points.length; i += 1)
+        { this.pointMatrix.addColumn(points[i]); }
+
+        const [centeringX, centeringY, centeringZ] = [-30, 0, -30];
+        this.pointMatrix.translateMatrix(centeringX, centeringY, centeringZ);
+
+        this.setFaces();
+        this.updateMatrices();
+    }
+    setFaces() {
+        this.faces = [{pointIndexes:[0,1,2,3],colour:"#c4c4c4"},{pointIndexes:[0,1,4],colour:"#c4c4c4"},{pointIndexes:[1,2,4],colour:"#c4c4c4"},{pointIndexes:[2,3,4],colour:"#c4c4c4"},{pointIndexes:[3,0,4],colour:"#c4c4c4"}];
+    }
+}
 
 class PawnObject extends Shape {
     constructor () {
@@ -64,6 +102,44 @@ class RookObject extends Shape {
         this.faces = [{pointIndexes:[1,0,4,5],colour:"#c4c4c4"},{pointIndexes:[0,3,7,4],colour:"#c4c4c4"},{pointIndexes:[3,2,6,7],colour:"#c4c4c4"},{pointIndexes:[2,1,5,6],colour:"#c4c4c4"},{pointIndexes:[6,10,9,5],colour:"#c4c4c4"},{pointIndexes:[5,9,8,4],colour:"#c4c4c4"},{pointIndexes:[4,8,11,7],colour:"#c4c4c4"},{pointIndexes:[10,11,7,6],colour:"#c4c4c4"},{pointIndexes:[11,15,14,10],colour:"#c4c4c4"},{pointIndexes:[10,14,13,9],colour:"#c4c4c4"},{pointIndexes:[9,13,12,8],colour:"#c4c4c4"},{pointIndexes:[8,12,15,11],colour:"#c4c4c4"},{pointIndexes:[12,15,19,16],colour:"#c4c4c4"},{pointIndexes:[15,14,18,19],colour:"#c4c4c4"},{pointIndexes:[14,18,17,13],colour:"#c4c4c4"},{pointIndexes:[13,17,16,12],colour:"#c4c4c4"},{pointIndexes:[18,22,21,17],colour:"#c4c4c4"},{pointIndexes:[21,17,16,20],colour:"#c4c4c4"},{pointIndexes:[20,16,19,23],colour:"#c4c4c4"},{pointIndexes:[23,19,18,22],colour:"#c4c4c4"},{pointIndexes:[27,23,22,26],colour:"#c4c4c4"},{pointIndexes:[26,22,21,25],colour:"#c4c4c4"},{pointIndexes:[25,21,20,24],colour:"#c4c4c4"},{pointIndexes:[24,20,23,27],colour:"#c4c4c4"},{pointIndexes:[24,28,31,27],colour:"#c4c4c4"},{pointIndexes:[27,31,30,26],colour:"#c4c4c4"},{pointIndexes:[26,30,29,25],colour:"#c4c4c4"},{pointIndexes:[25,29,28,24],colour:"#c4c4c4"},{pointIndexes:[30,31,28,29],colour:"#c4c4c4"}];
     }
 }
+class BishopObject extends Shape {
+    constructor () {
+        super();
+
+        this.pointMatrix = new matrix();
+        const points = [[-30,0,30],[30,0,30],[30,0,-30],[-30,0,-30],[-30,10,30],[30,10,30],[30,10,-30],[-30,10,-30],[-25,20,25],[25,20,25],[25,20,-25],[-25,20,-25],[-10,35,10],[10,35,10],[10,35,-10],[-10,35,-10],[-10,80,10],[10,80,10],[10,80,-10],[-10,80,-10],[-20,85,20],[20,85,20],[20,85,-20],[-20,85,-20],[-10,95,10],[10,95,10],[10,95,-10],[-10,95,-10],[-20,110,10],[20,110,10],[20,110,-10],[-20,110,-10],[-10,110,-20],[10,110,-20],[-10,110,20],[10,110,20],[0,130,0]];
+        for (let i = 0; i != points.length; i += 1)
+        { this.pointMatrix.addColumn(points[i]); }
+
+        const [centeringX, centeringY, centeringZ] = [0, 0, 0];
+        this.pointMatrix.translateMatrix(centeringX, centeringY, centeringZ);
+
+        this.setFaces();
+        this.updateMatrices();
+    }
+    setFaces() {
+        this.faces = [{pointIndexes:[1,0,4,5],colour:"#c4c4c4"},{pointIndexes:[0,3,7,4],colour:"#c4c4c4"},{pointIndexes:[3,2,6,7],colour:"#c4c4c4"},{pointIndexes:[2,1,5,6],colour:"#c4c4c4"},{pointIndexes:[6,10,9,5],colour:"#c4c4c4"},{pointIndexes:[5,9,8,4],colour:"#c4c4c4"},{pointIndexes:[4,8,11,7],colour:"#c4c4c4"},{pointIndexes:[10,11,7,6],colour:"#c4c4c4"},{pointIndexes:[11,15,14,10],colour:"#c4c4c4"},{pointIndexes:[10,14,13,9],colour:"#c4c4c4"},{pointIndexes:[9,13,12,8],colour:"#c4c4c4"},{pointIndexes:[8,12,15,11],colour:"#c4c4c4"},{pointIndexes:[12,15,19,16],colour:"#c4c4c4"},{pointIndexes:[15,14,18,19],colour:"#c4c4c4"},{pointIndexes:[14,18,17,13],colour:"#c4c4c4"},{pointIndexes:[13,17,16,12],colour:"#c4c4c4"},{pointIndexes:[20,16,19,23],colour:"#c4c4c4"},{pointIndexes:[23,19,18,22],colour:"#c4c4c4"},{pointIndexes:[22,18,17,21],colour:"#c4c4c4"},{pointIndexes:[21,17,16,20],colour:"#c4c4c4"},{pointIndexes:[25,24,20,21],colour:"#c4c4c4"},{pointIndexes:[24,27,23,20],colour:"#c4c4c4"},{pointIndexes:[23,27,26,22],colour:"#c4c4c4"},{pointIndexes:[22,26,25,21],colour:"#c4c4c4"},{pointIndexes:[30,29,25,26],colour:"#c4c4c4"},{pointIndexes:[29,35,25],colour:"#c4c4c4"},{pointIndexes:[35,34,24,25],colour:"#c4c4c4"},{pointIndexes:[34,28,24],colour:"#c4c4c4"},{pointIndexes:[28,31,27,24],colour:"#c4c4c4"},{pointIndexes:[31,32,27],colour:"#c4c4c4"},{pointIndexes:[32,33,26,27],colour:"#c4c4c4"},{pointIndexes:[33,30,26],colour:"#c4c4c4"},{pointIndexes:[36,30,29],colour:"#c4c4c4"},{pointIndexes:[36,29,35],colour:"#c4c4c4"},{pointIndexes:[36,35,34],colour:"#c4c4c4"},{pointIndexes:[36,34,28],colour:"#c4c4c4"},{pointIndexes:[36,28,31],colour:"#c4c4c4"},{pointIndexes:[36,31,32],colour:"#c4c4c4"},{pointIndexes:[36,32,33],colour:"#c4c4c4"},{pointIndexes:[36,33,30],colour:"#c4c4c4"}];
+    }
+}
+class KnightObject extends Shape {
+    constructor () {
+        super();
+
+        this.pointMatrix = new matrix();
+        const points = [[-30,0,30],[30,0,30],[30,0,-30],[-30,0,-30],[-30,10,30],[30,10,30],[30,10,-30],[-30,10,-30],[-25,20,25],[25,20,25],[25,20,-25],[-25,20,-25],[-10,25,20],[10,25,20],[10,25,-20],[-10,25,-20],[-10,60,20],[10,60,20],[10,60,-20],[-10,60,-20],[-10,80,5],[10,80,5],[10,80,-20],[-10,80,-20],[-15,85,35],[15,85,35],[15,85,-25],[-15,85,-25],[-12.5,100,5],[12.5,100,5],[12.5,100,-25],[-12.5,100,-25]];
+        for (let i = 0; i != points.length; i += 1)
+        { this.pointMatrix.addColumn(points[i]); }
+
+        const [centeringX, centeringY, centeringZ] = [0, 0, 0];
+        this.pointMatrix.translateMatrix(centeringX, centeringY, centeringZ);
+
+        this.setFaces();
+        this.updateMatrices();
+    }
+    setFaces() {
+        this.faces = [{pointIndexes:[1,0,4,5],colour:"#c4c4c4"},{pointIndexes:[0,3,7,4],colour:"#c4c4c4"},{pointIndexes:[3,2,6,7],colour:"#c4c4c4"},{pointIndexes:[2,1,5,6],colour:"#c4c4c4"},{pointIndexes:[6,10,9,5],colour:"#c4c4c4"},{pointIndexes:[5,9,8,4],colour:"#c4c4c4"},{pointIndexes:[4,8,11,7],colour:"#c4c4c4"},{pointIndexes:[10,11,7,6],colour:"#c4c4c4"},{pointIndexes:[11,15,14,10],colour:"#c4c4c4"},{pointIndexes:[10,14,13,9],colour:"#c4c4c4"},{pointIndexes:[9,13,12,8],colour:"#c4c4c4"},{pointIndexes:[8,12,15,11],colour:"#c4c4c4"},{pointIndexes:[16,12,15,19],colour:"#c4c4c4"},{pointIndexes:[19,15,14,18],colour:"#c4c4c4"},{pointIndexes:[18,14,13,17],colour:"#c4c4c4"},{pointIndexes:[17,13,12,16],colour:"#c4c4c4"},{pointIndexes:[21,17,16,20],colour:"#c4c4c4"},{pointIndexes:[16,20,23,19],colour:"#c4c4c4"},{pointIndexes:[23,22,18,19],colour:"#c4c4c4"},{pointIndexes:[22,18,17,21],colour:"#c4c4c4"},{pointIndexes:[22,21,25,26],colour:"#c4c4c4"},{pointIndexes:[21,20,24,25],colour:"#c4c4c4"},{pointIndexes:[24,20,23,27],colour:"#c4c4c4"},{pointIndexes:[27,26,22,23],colour:"#c4c4c4"},{pointIndexes:[31,27,26,30],colour:"#c4c4c4"},{pointIndexes:[30,26,25,29],colour:"#c4c4c4"},{pointIndexes:[29,28,24,25],colour:"#c4c4c4"},{pointIndexes:[24,27,31,28],colour:"#c4c4c4"},{pointIndexes:[28,29,30,31],colour:"#c4c4c4"}];
+    }
+}
 
 
 
@@ -93,7 +169,7 @@ class Pawn extends Piece {
         this.type = "pawn";
         this.body = new PawnObject();
         this.colour = colour;
-        this.setupObject(0.8);
+        this.setupObject(0.7);
     }
 }
 
@@ -104,10 +180,58 @@ class Rook extends Piece {
         this.type = "rook";
         this.body = new RookObject();
         this.colour = colour;
+        this.setupObject(0.85);
+    }
+}
+
+class Knight extends Piece {
+    constructor (colour: string) {
+        super();
+
+        this.type = "knight";
+        this.body = new KnightObject();
+        this.colour = colour;
+        this.setupObject(1);
+
+        if (colour == "black") {
+            this.body.rotation.y = 180;
+            this.body.updateMatrices();
+        }
+    }
+}
+
+class Bishop extends Piece {
+    constructor (colour: string) {
+        super();
+
+        this.type = "bishop";
+        this.body = new BishopObject();
+        this.colour = colour;
         this.setupObject(1);
     }
 }
 
+class Queen extends Piece {
+    constructor (colour: string) {
+        super();
+
+        this.type = "queen";
+        this.body = new SampleObject3();
+        this.colour = colour;
+        this.setupObject(1.1);
+    }
+}
+
+class King extends Piece {
+    constructor (colour: string) {
+        super();
+
+        this.type = "king";
+        this.body = new SampleObject2();
+        this.colour = colour;
+        this.setupObject(1);
+    }
+}
 
 
 
