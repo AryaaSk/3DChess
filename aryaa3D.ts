@@ -54,7 +54,7 @@ const drawShape = (points: number[][], colour: string, outline?: boolean) => {
     c.beginPath();
     c.moveTo(gridX(points[0][0] * dpi), gridY(points[0][1] * dpi));
     for (let pointsIndex = 1; pointsIndex != points.length; pointsIndex += 1) { 
-        c.lineTo(gridX(points[pointsIndex][0] * dpi), gridY(points[pointsIndex][1] * dpi)) 
+        c.lineTo(gridX(points[pointsIndex][0] * dpi), gridY(points[pointsIndex][1] * dpi));
     }
     c.closePath();
     c.fill();
@@ -159,6 +159,15 @@ class matrix {
             copyMatrix.addColumn(columnCopy); 
         }
         return copyMatrix;
+    }
+
+    roundMatrix() {
+        for (let i = 0; i != this.data.length; i += 1) {
+            for (let j = 0; j != this.data[i].length; j += 1)
+            {
+                this.data[i][j] = Math.round(this.data[i][j]);
+            }
+        }
     }
 
     constructor() { };
@@ -462,6 +471,8 @@ class Camera {
             const ultimateTranslation = screenOriginObjectVector.getColumn(0); //screenOriginObjectVector contains the originObjectTranslation inside it
             cameraObjectMatrix.translateMatrix(ultimateTranslation[0], ultimateTranslation[1], ultimateTranslation[2]);
 
+            cameraObjectMatrix.roundMatrix();
+
             //work out center of shape by finding average of all points
             let [totalX, totalY, totalZ] = [0, 0, 0];
             for (let i = 0; i != cameraObjectMatrix.width; i += 1) {
@@ -617,6 +628,7 @@ class Camera {
                 this.updateRotationMatrix();
             }
             [previousX, previousY] = [$e.clientX, $e.clientY];
+            changeInState = true;
         }
         document.addEventListener('keydown', ($e) => { //don't need to use event listeners on the mouse since it is attached to the canvas element
             const key = $e.key.toLowerCase();
@@ -632,6 +644,7 @@ class Camera {
             if (zoom == false) { return; }
             if (this.zoom < 0) { this.zoom = $e.wheelDeltaY / 1000; }
             this.zoom -= $e.wheelDeltaY / 1000;
+            changeInState = true;
         }
     }
 

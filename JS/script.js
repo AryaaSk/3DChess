@@ -75,13 +75,20 @@ board["f8"] = new Bishop("black");
 board["g8"] = new Knight("black");
 board["h8"] = new Rook("black");
 updateBoardPieces();
+//Camera only renders a frame if there was a changeInState, I set changeInState = true, at the end of everywhere there is physical interaction
+let changeInState = true;
 let chessboardPoints = new matrix();
-setInterval(() => {
-    clearCanvas();
-    camera.render([chessBoardBody]);
-    chessboardPoints = camera.render([chessBoard])[0].screenPoints;
-    camera.render(boardPieces); //pieces are always on top of board, which is why I limit rotation, in the future I should combine all objects into 1 when rendering
-});
+const animationLoop = () => {
+    if (changeInState == true) {
+        clearCanvas();
+        camera.render([chessBoardBody]);
+        chessboardPoints = camera.render([chessBoard])[0].screenPoints;
+        camera.render(boardPieces); //pieces are always on top of board, which is why I limit rotation, in the future I should combine all objects into 1 when rendering
+        changeInState = false;
+    }
+    requestAnimationFrame(animationLoop);
+};
+animationLoop();
 let currentMove = "white";
 const updateCurrentMove = () => { document.getElementById("currentMove").innerText = `Current Move: ${currentMove}`; };
 updateCurrentMove();
@@ -199,6 +206,7 @@ document.getElementById("renderingWindow").onclick = ($e) => {
             avaialableSquares = calculateAvailableMoves(board[selectedPiece].type, selectedPiece, currentMove);
         }
     }
+    changeInState = true;
 };
 const gameOver = () => {
     document.getElementById("renderingWindow").onclick = () => {

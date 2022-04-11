@@ -152,7 +152,15 @@ class Piece {
         this.body = new Shape(); //a reference to an object which will get rendered
     }
     setupObject(scale) {
-        this.body.showOutline = true;
+        //seems to be a large performance increase when you disable outlines
+        const url = new URL(window.location.href);
+        const outlines = url.searchParams.get("outlines"); //shadows are on by default, //you can turn shadows on or off by adding shadows=true / shadows=false in the url parameters
+        if (outlines == "false") {
+            this.body.showOutline = false;
+        }
+        else {
+            this.body.showOutline = true;
+        }
         this.body.scale = scale;
         this.body.updateMatrices();
         if (this.colour == "white") {

@@ -64,6 +64,10 @@ Unfortunately I have realised that performance is an issue, since there are so m
 
 Here is the old pawn (sphere top), with the new one (square top), it improves performace a bit, but is still an issue:
 <p float="left">
-  <img src="https://github.com/AryaaSk/3DChess/blob/master/Previews/ChessPawn.png?raw=true" width="375"/>
-  <img src="https://github.com/AryaaSk/3DChess/blob/master/Previews/ChessPawnSimple.png?raw=true" width="375"/>
+  <img src="https://github.com/AryaaSk/3DChess/blob/master/Previews/ChessPawn.png?raw=true" width="250"/>
+  <img src="https://github.com/AryaaSk/3DChess/blob/master/Previews/ChessPawnSimple.png?raw=true" width="250"/>
 </p>
+
+Although that did not help much, I made some other improvements to performance:
+- I changed the source code of the 3D engine a little bit, as well as the rendering loop. It now uses requestAnimationFrame(), and I also have a variable called changeInState, which is a boolean. Every time there is a user interaction, such as dragging the mouse or clicking something, changeInState is set to true at the end of the function. Then in the animation loop, it only renders a new frame if changeInState == true, and then once it has rendered the frame it sets the changeInState back to false. **This helps performance by a few FPS**.
+- However the largest jump in performance occured when I turned off the outlines for the pieces, this saw a huge improvement, however the problem was that it looked quite bad, and so I decided not to include this in the main game. **If you want to turn off the outline then just add a paramater *outlines=false* into the URL**. This must mean that the problem is being caused by drawing a lot of lines, since the faces do not seem to be a huge issue.
