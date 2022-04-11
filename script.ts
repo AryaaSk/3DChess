@@ -41,6 +41,7 @@ const resetBoardColours = () => {
 resetBoardColours();
 
 //Pieces
+/*
 board["a2"] = new Pawn("white");
 board["b2"] = new Pawn("white");
 board["c2"] = new Pawn("white");
@@ -58,6 +59,7 @@ board["e7"] = new Pawn("black");
 board["f7"] = new Pawn("black");
 board["g7"] = new Pawn("black");
 board["h7"] = new Pawn("black");
+*/
 
 board["a1"] = new Rook("white");
 board["b1"] = new Knight("white");
@@ -119,10 +121,16 @@ document.getElementById("renderingWindow")!.onclick = ($e) => {
         if (avaialableSquares.includes(selectedSquare)) { 
             movePiece(selectedPiece, selectedSquare);
             resetBoardColours();
-
-            selectedPiece = undefined;
-            if (currentMove == "white") { currentMove = "black"; }
-            else { currentMove = "white"; }
+            //after moving we need to check if the our own king will be in check after this move, if so then move it back
+            if (kingInCheck(currentMove) == true) {
+                movePiece(selectedSquare, selectedPiece); //inverse of previous move
+                console.log("Cannot move there since your king will still be in check");
+            }
+            else {
+                selectedPiece = undefined;
+                if (currentMove == "white") { currentMove = "black"; }
+                else { currentMove = "white"; }
+            }
             updateCurrentMove();
         }
         else if ( board[selectedSquare] != undefined && board[selectedSquare].colour == currentMove ) { //if it is not in the availableSquares, but there is still a piece there, it means that the user is trying to select another piece

@@ -45,6 +45,7 @@ const resetBoardColours = () => {
 };
 resetBoardColours();
 //Pieces
+/*
 board["a2"] = new Pawn("white");
 board["b2"] = new Pawn("white");
 board["c2"] = new Pawn("white");
@@ -53,6 +54,7 @@ board["e2"] = new Pawn("white");
 board["f2"] = new Pawn("white");
 board["g2"] = new Pawn("white");
 board["h2"] = new Pawn("white");
+
 board["a7"] = new Pawn("black");
 board["b7"] = new Pawn("black");
 board["c7"] = new Pawn("black");
@@ -61,6 +63,7 @@ board["e7"] = new Pawn("black");
 board["f7"] = new Pawn("black");
 board["g7"] = new Pawn("black");
 board["h7"] = new Pawn("black");
+*/
 board["a1"] = new Rook("white");
 board["b1"] = new Knight("white");
 board["c1"] = new Bishop("white");
@@ -115,12 +118,19 @@ document.getElementById("renderingWindow").onclick = ($e) => {
         if (avaialableSquares.includes(selectedSquare)) {
             movePiece(selectedPiece, selectedSquare);
             resetBoardColours();
-            selectedPiece = undefined;
-            if (currentMove == "white") {
-                currentMove = "black";
+            //after moving we need to check if the our own king will be in check after this move, if so then move it back
+            if (kingInCheck(currentMove) == true) {
+                movePiece(selectedSquare, selectedPiece); //inverse of previous move
+                console.log("Cannot move there since your king will still be in check");
             }
             else {
-                currentMove = "white";
+                selectedPiece = undefined;
+                if (currentMove == "white") {
+                    currentMove = "black";
+                }
+                else {
+                    currentMove = "white";
+                }
             }
             updateCurrentMove();
         }

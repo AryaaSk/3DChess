@@ -249,3 +249,33 @@ const calculateAvailableMoves = (pieceType: string, currentSquare: string, colou
 
     return avaialableSquares;
 }
+
+const kingInCheck = (colour: string) => {
+
+    //check if the king of the specified colour is in check at the current moment
+    //first get positions of every opposing colour's piece, as well as position of your own king
+    let opposingColour = "";
+    if (colour == "white") { opposingColour = "black"; }
+    else if (colour == "black") { opposingColour = "white"; }
+
+    let kingPosition = "";
+    const opposingPieces: { position: string, type: string }[] = [];
+    for (let key in board) {
+        if (board[key].colour == opposingColour) {
+            opposingPieces.push( { position: key, type: board[key].type } );
+        }
+        else if (board[key].colour == colour && board[key].type == "king") { kingPosition = key; }
+    }
+
+    //now find the possible moves for all the opposing pieces, and check if the king position is contained in any of them
+    for (let i = 0; i != opposingPieces.length; i += 1) {
+        const opposingPiece = opposingPieces[i];
+        const possibleMoves = calculateAvailableMoves(opposingPiece.type, opposingPiece.position, opposingColour);
+        resetBoardColours();
+        if (possibleMoves.includes(kingPosition)) {
+            return true;
+        }
+    }
+ 
+    return false;
+}
