@@ -6,16 +6,13 @@ camera.worldRotation.y = 20;
 camera.updateRotationMatrix();
 camera.enableMovementControls("renderingWindow", true, true, true, true);
 
-const whiteColour = "#ffffff";
-const blackColour = "#1f1f1f";
 const chessBoardBody = new Box(800, 100, 800);
-const boardColour = "#d19826";
-chessBoardBody.faces[0].colour = boardColour;
-chessBoardBody.faces[1].colour = boardColour;
-chessBoardBody.faces[2].colour = boardColour;
-chessBoardBody.faces[3].colour = boardColour;
-chessBoardBody.faces[4].colour = boardColour;
-chessBoardBody.faces[5].colour = boardColour;
+chessBoardBody.faces[0].colour = boardFrameColour;
+chessBoardBody.faces[1].colour = boardFrameColour;
+chessBoardBody.faces[2].colour = boardFrameColour;
+chessBoardBody.faces[3].colour = boardFrameColour;
+chessBoardBody.faces[4].colour = boardFrameColour;
+chessBoardBody.faces[5].colour = boardFrameColour;
 chessBoardBody.showOutline = true;
 
 const chessBoard = new ChessBoardTop();
@@ -29,12 +26,12 @@ const resetBoardColours = () => {
     for (let i = 0; i != 64; i += 1) {
         const row = Math.floor(i / 8);
         if (row % 2 == 0) {
-            if (i % 2 == 0) { chessBoard.faces[i].colour = blackColour; }
-            else { chessBoard.faces[i].colour = whiteColour; }
+            if (i % 2 == 0) { chessBoard.faces[i].colour = blackBoardColour; }
+            else { chessBoard.faces[i].colour = whiteBoardColour; }
         }
         else {
-            if (i % 2 == 0) { chessBoard.faces[i].colour = whiteColour; }
-            else { chessBoard.faces[i].colour = blackColour; }
+            if (i % 2 == 0) { chessBoard.faces[i].colour = whiteBoardColour; }
+            else { chessBoard.faces[i].colour = blackBoardColour; }
         }
     }
 }

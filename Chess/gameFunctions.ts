@@ -262,8 +262,8 @@ const calculateAvailableMoves = (pieceType: string, currentSquare: string, colou
     let i = 0; while (i != avaialableSquares.length) { if (board[avaialableSquares[i]]?.colour == colour || avaialableSquares[i] == undefined) { avaialableSquares.splice(i, 1); } else { i += 1; } }
     
     document.getElementById("currentMove")!.innerText = `${colour} selected ${pieceType} at ${currentSquare}`;
-    for (let i = 0; i != avaialableSquares.length; i += 1) { highlightSquare(avaialableSquares[i], "#c4c4c4"); }
-    highlightSquare(currentSquare, "#c4c4c4")
+    for (let i = 0; i != avaialableSquares.length; i += 1) { highlightSquare(avaialableSquares[i], moveHighlightColour); }
+    highlightSquare(currentSquare, selfHighlightColour)
 
     return avaialableSquares;
 }

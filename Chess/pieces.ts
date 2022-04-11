@@ -135,9 +135,30 @@ class KingObject extends Shape {
 }
 
 
-//Piece Classes
+//Colour Themes:
+
+//OLD THEME
+/*
 const whitePieceColour = "#ffffff";
 const blackPieceColour = "#525252";
+const moveHighlightColour = "#c4c4c4";
+
+const boardFrameColour = "#d19826";
+const whiteBoardColour = "#ffffff";
+const blackBoardColour = "#1f1f1f";
+*/
+
+//CHESS.COM INSPIRED THEME
+const whitePieceColour = "#f0f0f0";
+const blackPieceColour = "#454441";
+const moveHighlightColour = "#c4c4c4";
+const selfHighlightColour = "#c4c4c4";
+
+const boardFrameColour = "#a1a1a1";
+const whiteBoardColour = "#e6e8c6";
+const blackBoardColour = "#658544";
+
+//Piece Classes and Functions
 const setColour = (body: Shape, colour: string) => {
     for (let i = 0; i != body.faces.length; i +=1) {
         body.faces[i].colour = colour;

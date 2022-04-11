@@ -299,9 +299,9 @@ const calculateAvailableMoves = (pieceType, currentSquare, colour) => {
     }
     document.getElementById("currentMove").innerText = `${colour} selected ${pieceType} at ${currentSquare}`;
     for (let i = 0; i != avaialableSquares.length; i += 1) {
-        highlightSquare(avaialableSquares[i], "#c4c4c4");
+        highlightSquare(avaialableSquares[i], moveHighlightColour);
     }
-    highlightSquare(currentSquare, "#c4c4c4");
+    highlightSquare(currentSquare, selfHighlightColour);
     return avaialableSquares;
 };
 const kingInCheck = (colour) => {

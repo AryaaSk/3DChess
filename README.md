@@ -59,7 +59,7 @@ This is what the Queen and ChessboardTop look like in the Shape Builder, there i
   <img src="https://github.com/AryaaSk/3DChess/blob/master/Previews/ChessboardTop.png?raw=true" width="500"/>
 </p>
 
-## Performace
+## Performance
 Unfortunately I have realised that performance is an issue, since there are so many faces and points to calculate. I believe the main reason is because every pawn contains a sphere in it's model, which is the most demanding shape, so I could replce the sphere with a cube, to improve performance.
 
 Here is the old pawn (sphere top), with the new one (square top), it improves performace a bit, but is still an issue:

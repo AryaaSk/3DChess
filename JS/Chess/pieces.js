@@ -120,9 +120,26 @@ class KingObject extends Shape {
         this.faces = [{ pointIndexes: [1, 0, 4, 5], colour: "#c4c4c4" }, { pointIndexes: [0, 3, 7, 4], colour: "#c4c4c4" }, { pointIndexes: [3, 2, 6, 7], colour: "#c4c4c4" }, { pointIndexes: [2, 1, 5, 6], colour: "#c4c4c4" }, { pointIndexes: [6, 10, 9, 5], colour: "#c4c4c4" }, { pointIndexes: [5, 9, 8, 4], colour: "#c4c4c4" }, { pointIndexes: [4, 8, 11, 7], colour: "#c4c4c4" }, { pointIndexes: [10, 11, 7, 6], colour: "#c4c4c4" }, { pointIndexes: [11, 15, 14, 10], colour: "#c4c4c4" }, { pointIndexes: [10, 14, 13, 9], colour: "#c4c4c4" }, { pointIndexes: [9, 13, 12, 8], colour: "#c4c4c4" }, { pointIndexes: [8, 12, 15, 11], colour: "#c4c4c4" }, { pointIndexes: [12, 15, 19, 16], colour: "#c4c4c4" }, { pointIndexes: [15, 14, 18, 19], colour: "#c4c4c4" }, { pointIndexes: [14, 18, 17, 13], colour: "#c4c4c4" }, { pointIndexes: [13, 17, 16, 12], colour: "#c4c4c4" }, { pointIndexes: [20, 16, 19, 23], colour: "#c4c4c4" }, { pointIndexes: [23, 19, 18, 22], colour: "#c4c4c4" }, { pointIndexes: [22, 18, 17, 21], colour: "#c4c4c4" }, { pointIndexes: [21, 17, 16, 20], colour: "#c4c4c4" }, { pointIndexes: [25, 24, 20, 21], colour: "#c4c4c4" }, { pointIndexes: [24, 27, 23, 20], colour: "#c4c4c4" }, { pointIndexes: [23, 27, 26, 22], colour: "#c4c4c4" }, { pointIndexes: [22, 26, 25, 21], colour: "#c4c4c4" }, { pointIndexes: [30, 29, 25, 26], colour: "#c4c4c4" }, { pointIndexes: [29, 35, 25], colour: "#c4c4c4" }, { pointIndexes: [35, 34, 24, 25], colour: "#c4c4c4" }, { pointIndexes: [34, 28, 24], colour: "#c4c4c4" }, { pointIndexes: [28, 31, 27, 24], colour: "#c4c4c4" }, { pointIndexes: [31, 32, 27], colour: "#c4c4c4" }, { pointIndexes: [32, 33, 26, 27], colour: "#c4c4c4" }, { pointIndexes: [33, 30, 26], colour: "#c4c4c4" }, { pointIndexes: [35, 37, 29], colour: "#c4c4c4" }, { pointIndexes: [35, 37, 36, 34], colour: "#c4c4c4" }, { pointIndexes: [34, 36, 28], colour: "#c4c4c4" }, { pointIndexes: [28, 36, 39, 31], colour: "#c4c4c4" }, { pointIndexes: [31, 39, 32], colour: "#c4c4c4" }, { pointIndexes: [32, 39, 38, 33], colour: "#c4c4c4" }, { pointIndexes: [33, 38, 30], colour: "#c4c4c4" }, { pointIndexes: [30, 38, 37, 29], colour: "#c4c4c4" }, { pointIndexes: [39, 43, 42, 38], colour: "#c4c4c4" }, { pointIndexes: [38, 42, 41, 37], colour: "#c4c4c4" }, { pointIndexes: [37, 41, 40, 36], colour: "#c4c4c4" }, { pointIndexes: [36, 40, 43, 39], colour: "#c4c4c4" }, { pointIndexes: [43, 42, 46, 47], colour: "#c4c4c4" }, { pointIndexes: [41, 42, 46, 45], colour: "#c4c4c4" }, { pointIndexes: [45, 44, 40, 41], colour: "#c4c4c4" }, { pointIndexes: [44, 47, 43, 40], colour: "#c4c4c4" }, { pointIndexes: [50, 48, 52, 54], colour: "#c4c4c4" }, { pointIndexes: [48, 49, 53, 52], colour: "#c4c4c4" }, { pointIndexes: [49, 51, 55, 53], colour: "#c4c4c4" }, { pointIndexes: [51, 50, 54, 55], colour: "#c4c4c4" }, { pointIndexes: [48, 44, 47, 49], colour: "#c4c4c4" }, { pointIndexes: [45, 50, 51, 46], colour: "#c4c4c4" }, { pointIndexes: [52, 56, 59, 53], colour: "#c4c4c4" }, { pointIndexes: [57, 54, 55, 58], colour: "#c4c4c4" }, { pointIndexes: [63, 62, 58, 59], colour: "#c4c4c4" }, { pointIndexes: [61, 62, 58, 57], colour: "#c4c4c4" }, { pointIndexes: [60, 61, 57, 56], colour: "#c4c4c4" }, { pointIndexes: [63, 60, 56, 59], colour: "#c4c4c4" }, { pointIndexes: [60, 61, 62, 63], colour: "#c4c4c4" }];
     }
 }
-//Piece Classes
+//Colour Themes:
+//OLD THEME
+/*
 const whitePieceColour = "#ffffff";
 const blackPieceColour = "#525252";
+const moveHighlightColour = "#c4c4c4";
+
+const boardFrameColour = "#d19826";
+const whiteBoardColour = "#ffffff";
+const blackBoardColour = "#1f1f1f";
+*/
+//CHESS.COM INSPIRED THEME
+const whitePieceColour = "#f0f0f0";
+const blackPieceColour = "#454441";
+const moveHighlightColour = "#c4c4c4";
+const selfHighlightColour = "#c4c4c4";
+const boardFrameColour = "#a1a1a1";
+const whiteBoardColour = "#e6e8c6";
+const blackBoardColour = "#658544";
+//Piece Classes and Functions
 const setColour = (body, colour) => {
     for (let i = 0; i != body.faces.length; i += 1) {
         body.faces[i].colour = colour;
