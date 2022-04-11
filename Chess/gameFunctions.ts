@@ -53,9 +53,27 @@ const calculateAvailableMoves = (pieceType: string, currentSquare: string, colou
     //ALSO HAVE TO DIFFERENTIATE BETWEEN WHITE AND BLACK, FOR EXAMPLE WHITE PAWN MOVE FORWARD 1, BUT BLACK PAWN WILL MOVE BACKWARD 1 RELATIVE TO WHITE
 
     if (pieceType == "pawn") {
-        //can only move 1 forward
-        if (colour == "white") { avaialableSquares.push(movedSquare(currentSquare, 1, 0)); }
-        else if (colour == "black") { avaialableSquares.push(movedSquare(currentSquare, -1, 0)); }
+        //can move 1 forward, but if they are on row 2 / 7 (white / black), then they can also move 2 forward
+        if (colour == "white") {
+            //check if there is an opposing piece at a diagonal to the pawn, if so then we allow that
+            if (board[movedSquare(currentSquare, 1, -1)!]?.colour == "black") { avaialableSquares.push(movedSquare(currentSquare, 1, -1)); }
+            if (board[movedSquare(currentSquare, 1, 1)!]?.colour == "black") { avaialableSquares.push(movedSquare(currentSquare, 1, 1)); }
+
+            //also check if there is an opposite colour piece directly in front, if so then you can't move the pawn there
+            if (board[movedSquare(currentSquare, 1, 0)!] == undefined) { 
+                avaialableSquares.push(movedSquare(currentSquare, 1, 0)); 
+                if (board[movedSquare(currentSquare, 2, 0)!] == undefined && currentSquare[1] == "2") { avaialableSquares.push(movedSquare(currentSquare, 2, 0)); }
+            }
+        }
+        else if (colour == "black") { 
+            if (board[movedSquare(currentSquare, -1, -1)!]?.colour == "white") { avaialableSquares.push(movedSquare(currentSquare, -1, -1)); }
+            if (board[movedSquare(currentSquare, -1, 1)!]?.colour == "white") { avaialableSquares.push(movedSquare(currentSquare, -1, 1)); }
+
+            if (board[movedSquare(currentSquare, -1, 0)!] == undefined) { 
+                avaialableSquares.push(movedSquare(currentSquare, -1, 0)); 
+                if (board[movedSquare(currentSquare, -2, 0)!] == undefined && currentSquare[1] == "7") { avaialableSquares.push(movedSquare(currentSquare, -2, 0)); }
+            }
+        }
     }
     else if (pieceType == "rook") {
         //can move wherever in a straight line
@@ -243,9 +261,9 @@ const calculateAvailableMoves = (pieceType: string, currentSquare: string, colou
     //check if the moves are valid, invalid if the same colour piece occupies the space
     let i = 0; while (i != avaialableSquares.length) { if (board[avaialableSquares[i]]?.colour == colour || avaialableSquares[i] == undefined) { avaialableSquares.splice(i, 1); } else { i += 1; } }
     
-    document.getElementById("currentMove")!.innerText = `${colour} selected ${pieceType} at ${currentSquare}\nCan move to: ${JSON.stringify(avaialableSquares)}`;
-    for (let i = 0; i != avaialableSquares.length; i += 1) { highlightSquare(avaialableSquares[i], "#ff0000"); }
-    highlightSquare(currentSquare, "#87ceeb")
+    document.getElementById("currentMove")!.innerText = `${colour} selected ${pieceType} at ${currentSquare}`;
+    for (let i = 0; i != avaialableSquares.length; i += 1) { highlightSquare(avaialableSquares[i], "#c4c4c4"); }
+    highlightSquare(currentSquare, "#c4c4c4")
 
     return avaialableSquares;
 }

@@ -23,23 +23,26 @@
             height: 100vh;
             width: 100vw;
         }
-        #currentMove {
+        #messages {
             position: fixed;
             top: 30px;
             left: 0;
             right: 0;
             height: 500px;
             margin: 0;
-
             text-align: center;
-            text-transform:capitalize;
-
             pointer-events: none;
+        }
+        #currentMove {
+            text-transform: capitalize;
         }
     </style>
 </head>
 <body>
-    <h1 id="currentMove"></h1>
+    <div id="messages">
+        <h1 id="currentMove"></h1>
+        <h2 id="tempText"></h2>
+    </div>
 
     <canvas id="renderingWindow"></canvas>
 </body>

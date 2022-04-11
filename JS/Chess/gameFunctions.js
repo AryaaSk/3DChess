@@ -51,16 +51,40 @@ const movedSquare = (square, vertical, horizontal) => {
     }
 };
 const calculateAvailableMoves = (pieceType, currentSquare, colour) => {
-    var _a;
+    var _a, _b, _c, _d, _e;
     const avaialableSquares = [];
     //ALSO HAVE TO DIFFERENTIATE BETWEEN WHITE AND BLACK, FOR EXAMPLE WHITE PAWN MOVE FORWARD 1, BUT BLACK PAWN WILL MOVE BACKWARD 1 RELATIVE TO WHITE
     if (pieceType == "pawn") {
-        //can only move 1 forward
+        //can move 1 forward, but if they are on row 2 / 7 (white / black), then they can also move 2 forward
         if (colour == "white") {
-            avaialableSquares.push(movedSquare(currentSquare, 1, 0));
+            //check if there is an opposing piece at a diagonal to the pawn, if so then we allow that
+            if (((_a = board[movedSquare(currentSquare, 1, -1)]) === null || _a === void 0 ? void 0 : _a.colour) == "black") {
+                avaialableSquares.push(movedSquare(currentSquare, 1, -1));
+            }
+            if (((_b = board[movedSquare(currentSquare, 1, 1)]) === null || _b === void 0 ? void 0 : _b.colour) == "black") {
+                avaialableSquares.push(movedSquare(currentSquare, 1, 1));
+            }
+            //also check if there is an opposite colour piece directly in front, if so then you can't move the pawn there
+            if (board[movedSquare(currentSquare, 1, 0)] == undefined) {
+                avaialableSquares.push(movedSquare(currentSquare, 1, 0));
+                if (board[movedSquare(currentSquare, 2, 0)] == undefined && currentSquare[1] == "2") {
+                    avaialableSquares.push(movedSquare(currentSquare, 2, 0));
+                }
+            }
         }
         else if (colour == "black") {
-            avaialableSquares.push(movedSquare(currentSquare, -1, 0));
+            if (((_c = board[movedSquare(currentSquare, -1, -1)]) === null || _c === void 0 ? void 0 : _c.colour) == "white") {
+                avaialableSquares.push(movedSquare(currentSquare, -1, -1));
+            }
+            if (((_d = board[movedSquare(currentSquare, -1, 1)]) === null || _d === void 0 ? void 0 : _d.colour) == "white") {
+                avaialableSquares.push(movedSquare(currentSquare, -1, 1));
+            }
+            if (board[movedSquare(currentSquare, -1, 0)] == undefined) {
+                avaialableSquares.push(movedSquare(currentSquare, -1, 0));
+                if (board[movedSquare(currentSquare, -2, 0)] == undefined && currentSquare[1] == "7") {
+                    avaialableSquares.push(movedSquare(currentSquare, -2, 0));
+                }
+            }
         }
     }
     else if (pieceType == "rook") {
@@ -266,18 +290,18 @@ const calculateAvailableMoves = (pieceType, currentSquare, colour) => {
     //check if the moves are valid, invalid if the same colour piece occupies the space
     let i = 0;
     while (i != avaialableSquares.length) {
-        if (((_a = board[avaialableSquares[i]]) === null || _a === void 0 ? void 0 : _a.colour) == colour || avaialableSquares[i] == undefined) {
+        if (((_e = board[avaialableSquares[i]]) === null || _e === void 0 ? void 0 : _e.colour) == colour || avaialableSquares[i] == undefined) {
             avaialableSquares.splice(i, 1);
         }
         else {
             i += 1;
         }
     }
-    document.getElementById("currentMove").innerText = `${colour} selected ${pieceType} at ${currentSquare}\nCan move to: ${JSON.stringify(avaialableSquares)}`;
+    document.getElementById("currentMove").innerText = `${colour} selected ${pieceType} at ${currentSquare}`;
     for (let i = 0; i != avaialableSquares.length; i += 1) {
-        highlightSquare(avaialableSquares[i], "#ff0000");
+        highlightSquare(avaialableSquares[i], "#c4c4c4");
     }
-    highlightSquare(currentSquare, "#87ceeb");
+    highlightSquare(currentSquare, "#c4c4c4");
     return avaialableSquares;
 };
 const kingInCheck = (colour) => {

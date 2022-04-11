@@ -45,7 +45,6 @@ const resetBoardColours = () => {
 };
 resetBoardColours();
 //Pieces
-/*
 board["a2"] = new Pawn("white");
 board["b2"] = new Pawn("white");
 board["c2"] = new Pawn("white");
@@ -54,7 +53,6 @@ board["e2"] = new Pawn("white");
 board["f2"] = new Pawn("white");
 board["g2"] = new Pawn("white");
 board["h2"] = new Pawn("white");
-
 board["a7"] = new Pawn("black");
 board["b7"] = new Pawn("black");
 board["c7"] = new Pawn("black");
@@ -63,7 +61,6 @@ board["e7"] = new Pawn("black");
 board["f7"] = new Pawn("black");
 board["g7"] = new Pawn("black");
 board["h7"] = new Pawn("black");
-*/
 board["a1"] = new Rook("white");
 board["b1"] = new Knight("white");
 board["c1"] = new Bishop("white");
@@ -91,6 +88,12 @@ setInterval(() => {
 let currentMove = "white";
 const updateCurrentMove = () => { document.getElementById("currentMove").innerText = `Current Move: ${currentMove}`; };
 updateCurrentMove();
+const updateTempText = (message, duration) => {
+    document.getElementById("tempText").innerText = message;
+    setTimeout(() => {
+        document.getElementById("tempText").innerText = "";
+    }, duration);
+};
 let selectedPiece = undefined;
 let avaialableSquares = [];
 document.getElementById("renderingWindow").onclick = ($e) => {
@@ -116,20 +119,28 @@ document.getElementById("renderingWindow").onclick = ($e) => {
         const selectedSquare = JSON.parse(JSON.stringify(clickedSquare));
         //check whether selectedSquare is an allowedMove by checking if it is in the availableSquares
         if (avaialableSquares.includes(selectedSquare)) {
+            const pieceAtSelectedSquare = board[selectedSquare];
             movePiece(selectedPiece, selectedSquare);
             resetBoardColours();
             //after moving we need to check if the our own king will be in check after this move, if so then move it back
             if (kingInCheck(currentMove) == true) {
                 movePiece(selectedSquare, selectedPiece); //inverse of previous move
-                console.log("Cannot move there since your king will still be in check");
+                alert("Cannot move there since your king will still be in check");
             }
             else {
+                if (pieceAtSelectedSquare != undefined) {
+                    updateTempText(`${currentMove} took a ${pieceAtSelectedSquare.type}`, 3000);
+                }
                 selectedPiece = undefined;
                 if (currentMove == "white") {
                     currentMove = "black";
                 }
                 else {
                     currentMove = "white";
+                }
+                //also check if the player has put the king in check
+                if (kingInCheck(currentMove) == true) {
+                    updateTempText(`${currentMove} is in check`, 1000000);
                 }
             }
             updateCurrentMove();

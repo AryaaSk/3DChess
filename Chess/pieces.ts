@@ -6,26 +6,6 @@ const setColour = (body: Shape, colour: string) => {
 
 //OBJECTS
 //when building the shape, center on x and z, but not on y, the whole piece should sit on the y-axis
-class SampleObject extends Shape {
-    constructor () {
-        super();
-
-        this.pointMatrix = new matrix();
-        const points = [[0,0,0],[100,0,0],[50,0,100],[50,100,50]];
-        for (let i = 0; i != points.length; i += 1)
-        { this.pointMatrix.addColumn(points[i]); }
-
-        const [centeringX, centeringY, centeringZ] = [-50, 0, -50];
-        this.pointMatrix.translateMatrix(centeringX, centeringY, centeringZ);
-
-        this.setFaces();
-        this.updateMatrices();
-    }
-    setFaces() {
-        this.faces = [{pointIndexes:[0,1,2],colour:"#ff0000"},{pointIndexes:[0,1,3],colour:"#ff9300"},{pointIndexes:[1,2,3],colour:"#00f900"},{pointIndexes:[2,3,0],colour:"#0433ff"}];
-    }
-}
-
 class PawnObject extends Shape {
     constructor () {
         super();
@@ -121,6 +101,25 @@ class QueenObject extends Shape {
         this.faces = [{pointIndexes:[1,0,4,5],colour:"#c4c4c4"},{pointIndexes:[0,3,7,4],colour:"#c4c4c4"},{pointIndexes:[3,2,6,7],colour:"#c4c4c4"},{pointIndexes:[2,1,5,6],colour:"#c4c4c4"},{pointIndexes:[6,10,9,5],colour:"#c4c4c4"},{pointIndexes:[5,9,8,4],colour:"#c4c4c4"},{pointIndexes:[4,8,11,7],colour:"#c4c4c4"},{pointIndexes:[10,11,7,6],colour:"#c4c4c4"},{pointIndexes:[11,15,14,10],colour:"#c4c4c4"},{pointIndexes:[10,14,13,9],colour:"#c4c4c4"},{pointIndexes:[9,13,12,8],colour:"#c4c4c4"},{pointIndexes:[8,12,15,11],colour:"#c4c4c4"},{pointIndexes:[12,15,19,16],colour:"#c4c4c4"},{pointIndexes:[15,14,18,19],colour:"#c4c4c4"},{pointIndexes:[14,18,17,13],colour:"#c4c4c4"},{pointIndexes:[13,17,16,12],colour:"#c4c4c4"},{pointIndexes:[20,16,19,23],colour:"#c4c4c4"},{pointIndexes:[23,19,18,22],colour:"#c4c4c4"},{pointIndexes:[22,18,17,21],colour:"#c4c4c4"},{pointIndexes:[21,17,16,20],colour:"#c4c4c4"},{pointIndexes:[25,24,20,21],colour:"#c4c4c4"},{pointIndexes:[24,27,23,20],colour:"#c4c4c4"},{pointIndexes:[23,27,26,22],colour:"#c4c4c4"},{pointIndexes:[22,26,25,21],colour:"#c4c4c4"},{pointIndexes:[30,29,25,26],colour:"#c4c4c4"},{pointIndexes:[29,35,25],colour:"#c4c4c4"},{pointIndexes:[35,34,24,25],colour:"#c4c4c4"},{pointIndexes:[34,28,24],colour:"#c4c4c4"},{pointIndexes:[28,31,27,24],colour:"#c4c4c4"},{pointIndexes:[31,32,27],colour:"#c4c4c4"},{pointIndexes:[32,33,26,27],colour:"#c4c4c4"},{pointIndexes:[33,30,26],colour:"#c4c4c4"},{pointIndexes:[35,37,29],colour:"#c4c4c4"},{pointIndexes:[35,37,36,34],colour:"#c4c4c4"},{pointIndexes:[34,36,28],colour:"#c4c4c4"},{pointIndexes:[28,36,39,31],colour:"#c4c4c4"},{pointIndexes:[31,39,32],colour:"#c4c4c4"},{pointIndexes:[32,39,38,33],colour:"#c4c4c4"},{pointIndexes:[33,38,30],colour:"#c4c4c4"},{pointIndexes:[30,38,37,29],colour:"#c4c4c4"},{pointIndexes:[39,43,42,38],colour:"#c4c4c4"},{pointIndexes:[38,42,41,37],colour:"#c4c4c4"},{pointIndexes:[37,41,40,36],colour:"#c4c4c4"},{pointIndexes:[36,40,43,39],colour:"#c4c4c4"},{pointIndexes:[41,45,44,40],colour:"#c4c4c4"},{pointIndexes:[40,44,47,43],colour:"#c4c4c4"},{pointIndexes:[43,47,46,42],colour:"#c4c4c4"},{pointIndexes:[42,46,45,41],colour:"#c4c4c4"},{pointIndexes:[44,45,46,47],colour:"#c4c4c4"}];
     }
 }
+class KingObject extends Shape {
+    constructor () {
+        super();
+
+        this.pointMatrix = new matrix();
+        const points = [[-30,0,30],[30,0,30],[30,0,-30],[-30,0,-30],[-30,10,30],[30,10,30],[30,10,-30],[-30,10,-30],[-25,20,25],[25,20,25],[25,20,-25],[-25,20,-25],[-10,35,10],[10,35,10],[10,35,-10],[-10,35,-10],[-10,80,10],[10,80,10],[10,80,-10],[-10,80,-10],[-20,85,20],[20,85,20],[20,85,-20],[-20,85,-20],[-10,95,10],[10,95,10],[10,95,-10],[-10,95,-10],[-24,128,12],[24,128,12],[24,128,-12],[-24,128,-12],[-12,128,-24],[12,128,-24],[-12,128,24],[12,128,24],[-10,125,10],[10,125,10],[10,125,-10],[-10,125,-10],[-2,127.5,2],[2,127.5,2],[2,127.5,-2],[-2,127.5,-2],[-2,135,2],[2,135,2],[2,135,-2],[-2,135,-2],[-5,135,2],[-5,135,-2],[5,135,2],[5,135,-2],[-5,138,2],[-5,138,-2],[5,138,2],[5,138,-2],[-2,138,2],[2,138,2],[2,138,-2],[-2,138,-2],[-2,140,2],[2,140,2],[2,140,-2],[-2,140,-2]];
+        for (let i = 0; i != points.length; i += 1)
+        { this.pointMatrix.addColumn(points[i]); }
+
+        const [centeringX, centeringY, centeringZ] = [0, 0, 0];
+        this.pointMatrix.translateMatrix(centeringX, centeringY, centeringZ);
+
+        this.setFaces();
+        this.updateMatrices();
+    }
+    setFaces() {
+        this.faces = [{pointIndexes:[1,0,4,5],colour:"#c4c4c4"},{pointIndexes:[0,3,7,4],colour:"#c4c4c4"},{pointIndexes:[3,2,6,7],colour:"#c4c4c4"},{pointIndexes:[2,1,5,6],colour:"#c4c4c4"},{pointIndexes:[6,10,9,5],colour:"#c4c4c4"},{pointIndexes:[5,9,8,4],colour:"#c4c4c4"},{pointIndexes:[4,8,11,7],colour:"#c4c4c4"},{pointIndexes:[10,11,7,6],colour:"#c4c4c4"},{pointIndexes:[11,15,14,10],colour:"#c4c4c4"},{pointIndexes:[10,14,13,9],colour:"#c4c4c4"},{pointIndexes:[9,13,12,8],colour:"#c4c4c4"},{pointIndexes:[8,12,15,11],colour:"#c4c4c4"},{pointIndexes:[12,15,19,16],colour:"#c4c4c4"},{pointIndexes:[15,14,18,19],colour:"#c4c4c4"},{pointIndexes:[14,18,17,13],colour:"#c4c4c4"},{pointIndexes:[13,17,16,12],colour:"#c4c4c4"},{pointIndexes:[20,16,19,23],colour:"#c4c4c4"},{pointIndexes:[23,19,18,22],colour:"#c4c4c4"},{pointIndexes:[22,18,17,21],colour:"#c4c4c4"},{pointIndexes:[21,17,16,20],colour:"#c4c4c4"},{pointIndexes:[25,24,20,21],colour:"#c4c4c4"},{pointIndexes:[24,27,23,20],colour:"#c4c4c4"},{pointIndexes:[23,27,26,22],colour:"#c4c4c4"},{pointIndexes:[22,26,25,21],colour:"#c4c4c4"},{pointIndexes:[30,29,25,26],colour:"#c4c4c4"},{pointIndexes:[29,35,25],colour:"#c4c4c4"},{pointIndexes:[35,34,24,25],colour:"#c4c4c4"},{pointIndexes:[34,28,24],colour:"#c4c4c4"},{pointIndexes:[28,31,27,24],colour:"#c4c4c4"},{pointIndexes:[31,32,27],colour:"#c4c4c4"},{pointIndexes:[32,33,26,27],colour:"#c4c4c4"},{pointIndexes:[33,30,26],colour:"#c4c4c4"},{pointIndexes:[35,37,29],colour:"#c4c4c4"},{pointIndexes:[35,37,36,34],colour:"#c4c4c4"},{pointIndexes:[34,36,28],colour:"#c4c4c4"},{pointIndexes:[28,36,39,31],colour:"#c4c4c4"},{pointIndexes:[31,39,32],colour:"#c4c4c4"},{pointIndexes:[32,39,38,33],colour:"#c4c4c4"},{pointIndexes:[33,38,30],colour:"#c4c4c4"},{pointIndexes:[30,38,37,29],colour:"#c4c4c4"},{pointIndexes:[39,43,42,38],colour:"#c4c4c4"},{pointIndexes:[38,42,41,37],colour:"#c4c4c4"},{pointIndexes:[37,41,40,36],colour:"#c4c4c4"},{pointIndexes:[36,40,43,39],colour:"#c4c4c4"},{pointIndexes:[43,42,46,47],colour:"#c4c4c4"},{pointIndexes:[41,42,46,45],colour:"#c4c4c4"},{pointIndexes:[45,44,40,41],colour:"#c4c4c4"},{pointIndexes:[44,47,43,40],colour:"#c4c4c4"},{pointIndexes:[50,48,52,54],colour:"#c4c4c4"},{pointIndexes:[48,49,53,52],colour:"#c4c4c4"},{pointIndexes:[49,51,55,53],colour:"#c4c4c4"},{pointIndexes:[51,50,54,55],colour:"#c4c4c4"},{pointIndexes:[48,44,47,49],colour:"#c4c4c4"},{pointIndexes:[45,50,51,46],colour:"#c4c4c4"},{pointIndexes:[52,56,59,53],colour:"#c4c4c4"},{pointIndexes:[57,54,55,58],colour:"#c4c4c4"},{pointIndexes:[63,62,58,59],colour:"#c4c4c4"},{pointIndexes:[61,62,58,57],colour:"#c4c4c4"},{pointIndexes:[60,61,57,56],colour:"#c4c4c4"},{pointIndexes:[63,60,56,59],colour:"#c4c4c4"},{pointIndexes:[60,61,62,63],colour:"#c4c4c4"}];
+    }
+}
 
 
 //Piece Classes
@@ -207,9 +206,9 @@ class King extends Piece {
         super();
 
         this.type = "king";
-        this.body = new SampleObject();
+        this.body = new KingObject();
         this.colour = colour;
-        this.setupObject(1);
+        this.setupObject(1.2);
     }
 }
 
