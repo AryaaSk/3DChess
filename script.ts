@@ -41,6 +41,7 @@ const resetBoardColours = () => {
 resetBoardColours();
 
 //Pieces
+/*
 board["a2"] = new Pawn("white");
 board["b2"] = new Pawn("white");
 board["c2"] = new Pawn("white");
@@ -58,6 +59,7 @@ board["e7"] = new Pawn("black");
 board["f7"] = new Pawn("black");
 board["g7"] = new Pawn("black");
 board["h7"] = new Pawn("black");
+*/
 
 board["a1"] = new Rook("white");
 board["b1"] = new Knight("white");
@@ -138,9 +140,53 @@ document.getElementById("renderingWindow")!.onclick = ($e) => {
                 if (currentMove == "white") { currentMove = "black"; }
                 else { currentMove = "white"; }
 
-                //also check if the player has put the king in check
+                //after switching colours, check if the currentColour's king is in check, this means the other person has put the king in check
                 if (kingInCheck(currentMove) == true) {
                     updateTempText(`${currentMove} is in check`, 1000000);
+
+
+                    let boardBefore: any = {};
+                    boardBefore = board;
+
+                    const revertChanges = () => {
+                        //board = boardBefore;
+                    }
+
+                    //if you know that you are in check, you need to check if you are in checkmate
+                    //checkmate means that you cannot do anything to get out of check, so I need to calculate all the possible moves for every piece, and check if the king is in check for everymove
+
+                    let checkmate = true;
+                    const ownPieces: { position: string, type: string }[] = [];
+                    for (let key in board) {
+                        if (board[key].colour == currentMove) { ownPieces.push( {position: key, type: JSON.parse(JSON.stringify(board[key].type)) } ); }
+                    }
+                    for (let i = 0; i != ownPieces.length; i += 1) {
+                        const currentPiece = ownPieces[i];
+                        const possibleMoves = calculateAvailableMoves(currentPiece.type, currentPiece.position, currentMove);
+
+                        //loop through these moves, check if the king is still in check, and then revert the move
+                        for (let a = 0; a != possibleMoves.length; a += 1) {
+                            const moveTo = possibleMoves[a];
+                            movePiece(currentPiece.position, moveTo);
+
+                            if ( kingInCheck(currentMove) == false ) {
+                                console.log(`Could move ${currentPiece.position} to ${moveTo}`);
+                                checkmate = false;
+
+                                revertChanges();
+                                //break;
+                            }
+                            else { console.log('reverted'); revertChanges(); }
+                        }
+
+                        //if (checkmate == false) { break; }
+                    }
+
+                    if (checkmate == true) {
+                        updateTempText(`${currentMove} is Checkmated`, 1000000);
+                        document.getElementById("currentMove")!.innerText = `Other player Wins!`;
+                        gameOver();
+                    }
                 }
             }
             updateCurrentMove();
@@ -150,5 +196,11 @@ document.getElementById("renderingWindow")!.onclick = ($e) => {
             resetBoardColours();
             avaialableSquares = calculateAvailableMoves(board[selectedPiece].type, selectedPiece, currentMove);
         }
+    }
+}
+
+const gameOver = () => {
+    document.onmousedown = () => {
+        alert("Reload Page to Play Again");
     }
 }

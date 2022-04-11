@@ -236,7 +236,7 @@ class ChessBoardTop extends Shape {
     }
 }
 
-const board: {[k: string] : Piece} = {};
+let board: {[k: string] : Piece} = {};
 
 let boardPieces: Shape[] = [];
 const updateBoardPieces = () => { //call this everytime there is a change on the board
@@ -250,6 +250,7 @@ const updateBoardPieces = () => { //call this everytime there is a change on the
 }
 
 const movePiece = (fromSquare: string, toSquare: string) => {
+    console.log(`Moved piece ${fromSquare} to ${toSquare}`);
     const piece = board[fromSquare];
     delete board[fromSquare];
     board[toSquare] = piece;
