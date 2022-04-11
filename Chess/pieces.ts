@@ -1,9 +1,3 @@
-const setColour = (body: Shape, colour: string) => {
-    for (let i = 0; i != body.faces.length; i +=1) {
-        body.faces[i].colour = colour;
-    }
-}
-
 //OBJECTS
 //when building the shape, center on x and z, but not on y, the whole piece should sit on the y-axis
 class PawnObject extends Shape {
@@ -125,6 +119,11 @@ class KingObject extends Shape {
 //Piece Classes
 const whitePieceColour = "#ffffff";
 const blackPieceColour = "#525252";
+const setColour = (body: Shape, colour: string) => {
+    for (let i = 0; i != body.faces.length; i +=1) {
+        body.faces[i].colour = colour;
+    }
+}
 
 class Piece {
     type: string = "pawn";
