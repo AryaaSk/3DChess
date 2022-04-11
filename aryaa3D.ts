@@ -65,6 +65,14 @@ const drawShape = (points: number[][], colour: string, outline?: boolean) => {
         drawLine(points[points.length - 1], points[0], "000000"); //to cover the line from last point to first point
     }
 }
+const drawPolygon = (points: number[][]) => {
+    c.lineWidth = 3;
+    for (let i = 1; i != points.length; i += 1)
+    { drawLine(points[i - 1], points[i], "#000000"); }
+    drawLine(points[points.length - 1], points[0], "000000");
+    c.lineWidth = 1;
+    return;
+}
 
 const clearCanvas = () => {
     if (c == undefined) { console.error("Cannot draw, canvas is not linked, please use the linkCanvas(canvasID) before rendering any shapes"); return; }
@@ -270,6 +278,8 @@ class Shape
     //Rendering
     position: {x: number, y: number, z: number} = {x: 0, y: 0, z: 0};
     showOutline: boolean = false;
+    outline2D: boolean = false; //added this to improve performance
+
     showPoints: boolean = false;
     faces: { pointIndexes: number[], colour: string }[]  = []; //stores the indexes of the columns (points) in the physicalMatrix
     showFaceIndexes: boolean = false;
@@ -513,6 +523,14 @@ class Camera {
             }
 
             const sortedFaces = this.sortFurthestDistanceTo(objectFaces, "center", positionPoint); //sort based on distance from center to (0, 0, -50000)
+
+            //draw 2D outline, it is 2D because the faces get overlaid so only the ones on the outside are visible
+            //this is faster as you are not drawing the outline at the same time as the faces, which seems like an irrelavant factor...
+            if (object.outline2D == true) {
+                for (let i = 0; i != sortedFaces.length; i += 1) {
+                    drawPolygon(sortedFaces[i].points);
+                }
+            }
 
             //draw the faces as a quadrilateral, later I will change the drawQuadrilateral function to a drawShape function, which can take as many points as it needs
             for (let i = 0; i != sortedFaces.length; i += 1)

@@ -154,9 +154,10 @@ class Piece {
     setupObject(scale) {
         //seems to be a large performance increase when you disable outlines
         const url = new URL(window.location.href);
-        const outlines = url.searchParams.get("outlines"); //shadows are on by default, //you can turn shadows on or off by adding shadows=true / shadows=false in the url parameters
-        if (outlines == "false") {
+        const outlines = url.searchParams.get("2doutlines"); //shadows are on by default, //you can turn shadows on or off by adding shadows=true / shadows=false in the url parameters
+        if (outlines == "true") {
             this.body.showOutline = false;
+            this.body.outline2D = true;
         }
         else {
             this.body.showOutline = true;
