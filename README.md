@@ -54,7 +54,7 @@ I had to model every piece individually using the [Shape Builder](https://aryaas
 I also had to model the chess board itself, which is just a box and then a custom plane on top, the plane has 64 faces to represent the 64 spaces on a chess board, the model of that is after all the piece models, it's called ChessboardTop. To construct the board I create a box of dimensions *800 x 100 x 800*, and then place the ChessboardTop on top of this.
 
 This is what the Queen and ChessboardTop look like in the Shape Builder, there is no colour since the colour is added dynamically based on the colour of the piece in the game:
-<p float="left">
+<p float="left" style="display: flex; align-items: center">
   <img src="https://github.com/AryaaSk/3DChess/blob/master/Previews/Queen.png?raw=true" width="250"/>
   <img src="https://github.com/AryaaSk/3DChess/blob/master/Previews/ChessboardTop.png?raw=true" width="500"/>
 </p>
