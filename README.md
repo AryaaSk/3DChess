@@ -12,11 +12,6 @@ Here are some previews of the game:
 
 ![Preview 2](https://github.com/AryaaSk/3DChess/blob/master/Previews/ChessPreview2.png?raw=true)
 
-## Objects and Models
-I had to model every piece individually using the [Shape Builder](https://aryaask.github.io/3D-Engine/ShapeBuilder/). If you want the models, you can go to the [Pieces File](Chess/pieces.ts), if you look at the top there are the piece object clases.
-
-I also had to model the chess board itself, which is just a box and then a custom plane on top, the plane has 64 faces to represent the 64 spaces on a chess board, the model of that is after all the piece models, it's called ChessboardTop. To construct the board I create a box of dimensions *800 x 100 x 800*, and then place the ChessboardTop on top of this.
-
 ## How it works
 ### Game Flow:
 There is a Piece class, which contains about:
@@ -52,3 +47,12 @@ The game flow works like this:
     4. Then after each move, check if the king is still in check, if he is not then you know you are not in checkmate.
 
 *One of the missing features is the Stalemate, which is when your king is not directly in check, but cannot move anywhere without being in check, I may implement this later*
+
+## Objects and Models
+I had to model every piece individually using the [Shape Builder](https://aryaask.github.io/3D-Engine/ShapeBuilder/). If you want the models, you can go to the [Pieces File](Chess/pieces.ts), if you look at the top there are the piece object clases.
+
+I also had to model the chess board itself, which is just a box and then a custom plane on top, the plane has 64 faces to represent the 64 spaces on a chess board, the model of that is after all the piece models, it's called ChessboardTop. To construct the board I create a box of dimensions *800 x 100 x 800*, and then place the ChessboardTop on top of this.
+
+This is what the Queen and ChessboardTop look like in the Shape Builder, there is no colour since the colour is added dynamically based on the colour of the piece in the game:
+![Queen](https://github.com/AryaaSk/3DChess/blob/master/Previews/Queen.png?raw=true)
+![ChessboardTop](https://github.com/AryaaSk/3DChess/blob/master/Previews/ChessboardTop.png?raw=true)

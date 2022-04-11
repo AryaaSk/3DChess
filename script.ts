@@ -41,7 +41,6 @@ const resetBoardColours = () => {
 resetBoardColours();
 
 //Pieces
-/*
 board["a2"] = new Pawn("white");
 board["b2"] = new Pawn("white");
 board["c2"] = new Pawn("white");
@@ -59,7 +58,6 @@ board["e7"] = new Pawn("black");
 board["f7"] = new Pawn("black");
 board["g7"] = new Pawn("black");
 board["h7"] = new Pawn("black");
-*/
 
 board["a1"] = new Rook("white");
 board["b1"] = new Knight("white");

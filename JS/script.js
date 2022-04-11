@@ -45,7 +45,6 @@ const resetBoardColours = () => {
 };
 resetBoardColours();
 //Pieces
-/*
 board["a2"] = new Pawn("white");
 board["b2"] = new Pawn("white");
 board["c2"] = new Pawn("white");
@@ -54,7 +53,6 @@ board["e2"] = new Pawn("white");
 board["f2"] = new Pawn("white");
 board["g2"] = new Pawn("white");
 board["h2"] = new Pawn("white");
-
 board["a7"] = new Pawn("black");
 board["b7"] = new Pawn("black");
 board["c7"] = new Pawn("black");
@@ -63,7 +61,6 @@ board["e7"] = new Pawn("black");
 board["f7"] = new Pawn("black");
 board["g7"] = new Pawn("black");
 board["h7"] = new Pawn("black");
-*/
 board["a1"] = new Rook("white");
 board["b1"] = new Knight("white");
 board["c1"] = new Bishop("white");
