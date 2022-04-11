@@ -41,6 +41,7 @@ const resetBoardColours = () => {
 resetBoardColours();
 
 //Pieces
+/*
 board["a2"] = new Pawn("white");
 board["b2"] = new Pawn("white");
 board["c2"] = new Pawn("white");
@@ -58,6 +59,7 @@ board["e7"] = new Pawn("black");
 board["f7"] = new Pawn("black");
 board["g7"] = new Pawn("black");
 board["h7"] = new Pawn("black");
+*/
 
 board["a1"] = new Rook("white");
 board["b1"] = new Knight("white");
@@ -122,14 +124,16 @@ document.getElementById("renderingWindow")!.onclick = ($e) => {
         const selectedSquare = JSON.parse(JSON.stringify(clickedSquare));
         
         //check whether selectedSquare is an allowedMove by checking if it is in the availableSquares
-        if (avaialableSquares.includes(selectedSquare)) { 
-            const pieceAtSelectedSquare = board[selectedSquare];
+        if (avaialableSquares.includes(selectedSquare)) {
+            const boardBeforeMove = Object.assign({}, board);
+            const pieceAtSelectedSquare =  board[selectedSquare];
             movePiece(selectedPiece, selectedSquare);
             resetBoardColours();
             //after moving we need to check if the our own king will be in check after this move, if so then move it back
             if (kingInCheck(currentMove) == true) {
-                movePiece(selectedSquare, selectedPiece); //inverse of previous move
                 alert("Cannot move there since your king will still be in check");
+                board = Object.assign({}, boardBeforeMove); //revert change
+                updateBoardPieces();
             }
             else {
                 if (pieceAtSelectedSquare != undefined) { updateTempText(`${currentMove} took a ${pieceAtSelectedSquare.type}`, 3000); }
@@ -183,6 +187,9 @@ document.getElementById("renderingWindow")!.onclick = ($e) => {
                         document.getElementById("currentMove")!.innerText = `${otherPlayer} Wins!`;
                         gameOver();
                     }
+                }
+                else {
+                    updateTempText(``, 10);
                 }
             }
             updateCurrentMove();

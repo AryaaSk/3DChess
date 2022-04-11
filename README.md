@@ -1,11 +1,16 @@
 # 3D Chess
-## A chess game in 3D, which I made to test my 3D Engine
+## A chess game in 3D, which I made to test my [3D Engine](https://github.com/AryaaSk/3D-Engine)
 
 ## How to play
 It is just like regular chess, but 3D, you can use the mouse to look around the board and zoom in/out.\
 **The game may have some bugs here and there, since I was more focused on the 3D aspect rather than the actual gameplay**
 
+I hosted the game on Github Pages: https://aryaask.github.io/3DChess/index.html
 
+Here are some previews of the game:
+![Preview 1](https://github.com/AryaaSk/3DChess/blob/master/Previews/ChessPreview1.png?raw=true)
+
+![Preview 2](https://github.com/AryaaSk/3DChess/blob/master/Previews/ChessPreview2.png?raw=true)
 
 ## Objects and Models
 I had to model every piece individually using the [Shape Builder](https://aryaask.github.io/3D-Engine/ShapeBuilder/). If you want the models, you can go to the [Pieces File](Chess/pieces.ts), if you look at the top there are the piece object clases.
