@@ -69,7 +69,7 @@ Here is the old pawn (sphere top), with the new one (square top), it improves pe
 </p>
 
 Although that did not help much, I made some other improvements to performance:
-- I changed the source code of the 3D engine a little bit, as well as the rendering loop. It now uses requestAnimationFrame(), and I also have a variable called changeInState, which is a boolean. Every time there is a user interaction, such as dragging the mouse or clicking something, changeInState is set to true at the end of the function. Then in the animation loop, it only renders a new frame if changeInState == true, and then once it has rendered the frame it sets the changeInState back to false. **This helps performance by a few FPS**.
+- I modified the source code of the 3D engine a little bit, as well as the rendering loop. It now uses requestAnimationFrame(), and I also have a variable called changeInState, which is a boolean. Every time there is a user interaction, such as dragging the mouse or clicking something, changeInState is set to true at the end of the function. Then in the animation loop, it only renders a new frame if changeInState == true, and then once it has rendered the frame it sets the changeInState back to false. **This helps performance by a few FPS**.
 - I also added a roundMatrix() function, which just rounds the matrix, to avoid the canvas trying to draw floating-point cooridinates.
 
 - I have singled the problem out to be because I am trying to do **too many operations on the canvas at once**, when I only draw the border lines, or only draw the faces, then it is fine. The solution is probably to use 2 canvases, 1 for the main faces, and 1 for the outlines. Then all calls to the drawLine function will actually draw to the second canvas.

@@ -1,4 +1,5 @@
 "use strict";
+let changeInState = true; //modified source a little bit
 //CANVAS UTILITIES
 let dpi = 1; //window.devicePixelRatio; //it is too laggy when dpi >1
 let canvas = undefined;
@@ -12,6 +13,7 @@ const linkCanvas = (canvasID) => {
     canvasWidth = document.getElementById(canvasID).getBoundingClientRect().width;
     canvas.setAttribute('height', String(canvasHeight * dpi));
     canvas.setAttribute('width', String(canvasWidth * dpi));
+    changeInState = true;
     window.onresize = () => { linkCanvas(canvasID); }; //just calling the function to initialise the canvas again
 };
 //ACTUAL DRAWING FUNCTIONS
@@ -70,8 +72,8 @@ const drawShape = (points, colour, outline) => {
     for (let pointsIndex = 1; pointsIndex != points.length; pointsIndex += 1) {
         c.lineTo(gridX(points[pointsIndex][0] * dpi), gridY(points[pointsIndex][1] * dpi));
     }
-    c.closePath();
     c.fill();
+    c.closePath();
     if (outline == true) {
         for (let i = 1; i != points.length; i += 1) {
             drawLine(points[i - 1], points[i], "#000000");
@@ -561,9 +563,9 @@ class Camera {
         let altDown = false;
         let previousX = 0;
         let previousY = 0;
-        document.getElementById(canvasID).onmousedown = ($e) => { mouseDown = true; previousX = $e.clientX; previousY = $e.clientY; };
-        document.getElementById(canvasID).onmouseup = () => { mouseDown = false; };
-        document.getElementById(canvasID).onmousemove = ($e) => {
+        document.getElementById(canvasID).onpointerdown = ($e) => { mouseDown = true; previousX = $e.clientX; previousY = $e.clientY; }; //changed these from mousedown to pointerdown, to be more mobile friendly
+        document.getElementById(canvasID).onpointerup = () => { mouseDown = false; };
+        document.getElementById(canvasID).onpointermove = ($e) => {
             if (mouseDown == false) {
                 return;
             }

@@ -5,6 +5,14 @@ camera.worldRotation.x = -20;
 camera.worldRotation.y = 20;
 camera.updateRotationMatrix();
 camera.enableMovementControls("renderingWindow", true, true, true, true);
+camera.zoom = (window.innerWidth) / 1200;
+if (camera.zoom > 1.5) {
+    camera.zoom = 1.5;
+}
+else if (camera.zoom < 0.4) {
+    camera.zoom = 0.4;
+}
+camera.absPosition.y = 100;
 const chessBoardBody = new Box(800, 100, 800);
 chessBoardBody.faces[0].colour = boardFrameColour;
 chessBoardBody.faces[1].colour = boardFrameColour;
@@ -76,7 +84,6 @@ board["g8"] = new Knight("black");
 board["h8"] = new Rook("black");
 updateBoardPieces();
 //Camera only renders a frame if there was a changeInState, I set changeInState = true, at the end of everywhere there is physical interaction
-let changeInState = true;
 let chessboardPoints = new matrix();
 const animationLoop = () => {
     if (changeInState == true) {
