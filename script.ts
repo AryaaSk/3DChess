@@ -10,6 +10,7 @@ camera.zoom = (window.innerWidth) / 1200;
 if (camera.zoom > 1.5) { camera.zoom = 1.5; }
 else if (camera.zoom < 0.4) { camera.zoom = 0.4; }
 camera.absPosition.y = 100;
+camera.zoom = camera.zoom / dpi;
 
 const chessBoardBody = new Box(800, 100, 800);
 chessBoardBody.faces[0].colour = boardFrameColour;

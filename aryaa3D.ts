@@ -1,7 +1,7 @@
 let changeInState = true; //modified source a little bit
 
 //CANVAS UTILITIES
-let dpi = 1; //window.devicePixelRatio; //it is too laggy when dpi >1
+let dpi = window.devicePixelRatio; //also managed to fix DPI, just had to fix the gridX and gridY functions to also include DPI
 let canvas: any = undefined;
 let c: any = undefined;
 let canvasWidth = 0; 
@@ -23,11 +23,11 @@ const linkCanvas = (canvasID: string) => {
 //ACTUAL DRAWING FUNCTIONS
 const gridX = (x: number) => {
     if (c == undefined) { console.error("Cannot draw, canvas is not linked, please use the linkCanvas(canvasID) before rendering any shapes"); return; }
-    return (canvasWidth / 2) + x;
+    return ((canvasWidth / 2) + x)  * dpi;
 }
 const gridY = (y: number) => {  //on the page y = 0 is at the top, however in an actual grid y = 0 is at the bottom
     if (c == undefined) { console.error("Cannot draw, canvas is not linked, please use the linkCanvas(canvasID) before rendering any shapes"); return; }
-    return (canvasHeight / 2) - y;
+    return ((canvasHeight / 2) - y) * dpi;
 }
 const plotPoint = (p: number[], colour: string, label?: string) => {
     if (c == undefined) { console.error("Cannot draw, canvas is not linked, please use the linkCanvas(canvasID) before rendering any shapes"); return; }

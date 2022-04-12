@@ -1,5 +1,6 @@
 # 3D Chess
 ## A chess game in 3D, which I made to test my [3D Engine](https://github.com/AryaaSk/3D-Engine)
+I modified my library a little bit here, just to fit the needs of this project better
 
 ## How to play
 It is just like regular chess, but 3D, you can use the mouse to look around the board and zoom in/out.\
