@@ -185,13 +185,6 @@ class matrix {
         }
         return copyMatrix;
     }
-    roundMatrix() {
-        for (let i = 0; i != this.data.length; i += 1) {
-            for (let j = 0; j != this.data[i].length; j += 1) {
-                this.data[i][j] = Math.round(this.data[i][j]);
-            }
-        }
-    }
     ;
 }
 const multiplyMatrixs = (m1, m2) => {
@@ -431,7 +424,7 @@ class Camera {
             screenOriginObjectVector.scaleUp(this.zoom);
             const ultimateTranslation = screenOriginObjectVector.getColumn(0); //screenOriginObjectVector contains the originObjectTranslation inside it
             cameraObjectMatrix.translateMatrix(ultimateTranslation[0], ultimateTranslation[1], ultimateTranslation[2]);
-            cameraObjectMatrix.roundMatrix();
+            //cameraObjectMatrix.roundMatrix(); //very laggy on mobile
             //work out center of shape by finding average of all points
             let [totalX, totalY, totalZ] = [0, 0, 0];
             for (let i = 0; i != cameraObjectMatrix.width; i += 1) {
