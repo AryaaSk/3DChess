@@ -68,9 +68,12 @@ This is what the Queen and ChessboardTop look like in the Shape Builder, there i
 ### 3D Positioning and Movement
 - To convert a chess square position such as A1 or E7, into an actual 3D position in the world, I just used a simple formula:
     1. First I converted the Square into a column and row, for example, A1 is of column 0 and row 0, E7 is column 4, row 6.
-    2. Then, since I know that the length and width of the chessboard is just going to be (800 * chessboard.scale), I can find the position of the piece using **((column or row) - 4) * 100 * chessboard.scale. This gives me the coordintes of the bottom-left corner of the square in the 3D world.
-    3. Then to find the center of the square I just add (100 * chessboard.scale) to the X and Z coordinates. The height of the board remains at constant 100, so to position the piece on top of the board I set the Y to 50.
-    - When modelling the pieces, I made sure to center the pieces on the X and Z axis, but not the Y axis, so that all pieces would be consistent, and I wouldn't have to do a calculation to find the Y axis based on the object's/piece's height.
+    2. Then, since I know that the length and width of the chessboard is just going to be (800 * chessboard.scale), I can find the position of the piece using **((column or row) - 4) * 100 * chessboard.scale**, row gives you the X coordinate, and column gives you the Z coordinte. The chessboard scale is set to 0.92, so that the board creates a border around it.
+        - This gives me the coordintes of the bottom-left corner of the square in the 3D world, for example A1 would have an **X coordinate of -368**, and a **Z coordinate of -368**.
+
+    3. Then to find the center of the square I just add (50 * chessboard.scale) to the X and Z coordinates. The height of the board remains at constant 100, so to position the piece on top of the board I set the Y to 50.
+        - Finally this would give the square A1, a coordinate of **(-322, 50, -322)** in the center of the square, which makes sense since A1 is in the bottom left corner of the grid.
+*When modelling the pieces, I made sure to center the pieces on the X and Z axis, but not the Y axis, so that all pieces would be consistent, and I wouldn't have to do a calculation to find the Y axis based on the object's/piece's height.*
 
 - The 3D movement such as rotating the board, moving the board, and zooming in/out, is all handled by my 3D Library, I just called the  enabledMovementControls() function, however I did modify it a little to trigger on pointer events, rather than mouse events. I will have to change that in the original source code as well, since you need to use pointer events to be able to use the controls on mobile as well.
 
