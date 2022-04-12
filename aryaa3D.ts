@@ -1,4 +1,4 @@
-let changeInState = true; //modified source a little bit
+let changeInState = true; //modified source a little bit, camera only renders a new frame when there has been a change in state to save performance
 
 //CANVAS UTILITIES
 let dpi = window.devicePixelRatio; //also managed to fix DPI, just had to fix the gridX and gridY functions to also include DPI
@@ -621,8 +621,8 @@ class Camera {
         let altDown = false;
         let previousX = 0;
         let previousY = 0;
-        document.getElementById(canvasID)!.onpointerdown = ($e) => { mouseDown = true; previousX = $e.clientX; previousY = $e.clientY; } //changed these from mousedown to pointerdown, to be more mobile friendly
-        document.getElementById(canvasID)!.onpointerup = () => { mouseDown = false; }
+        document.getElementById(canvasID)!.onpointerdown = ($e) => { mouseDown = true; previousX = $e.clientX; previousY = $e.clientY; changeInState = true; } //changed these from mousedown to pointerdown, to be more mobile friendly
+        document.getElementById(canvasID)!.onpointerup = () => { mouseDown = false; changeInState = true; }
         document.getElementById(canvasID)!.onpointermove = ($e) => {
             if (mouseDown == false) { return; }
 
