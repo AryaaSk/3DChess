@@ -13,6 +13,11 @@ Here are some previews of the game:
 
 ![Preview 2](https://github.com/AryaaSk/3DChess/blob/master/Previews/ChessPreview2.png?raw=true)
 
+I have actually changed the theme to a Green and Grey theme, if you prefered the old theme as seen in the images above, then add this parameter to the URL:
+```
+theme=original
+```
+
 ## How it works
 ### Game Flow:
 There is a Piece class, which contains about:

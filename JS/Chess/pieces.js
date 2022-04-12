@@ -1,4 +1,5 @@
 "use strict";
+var _a;
 //OBJECTS
 //when building the shape, center on x and z, but not on y, the whole piece should sit on the y-axis
 class PawnObjectSphere extends Shape {
@@ -121,24 +122,33 @@ class KingObject extends Shape {
     }
 }
 //Colour Themes:
-//OLD THEME
-/*
-const whitePieceColour = "#ffffff";
-const blackPieceColour = "#525252";
-const moveHighlightColour = "#c4c4c4";
-
-const boardFrameColour = "#d19826";
-const whiteBoardColour = "#ffffff";
-const blackBoardColour = "#1f1f1f";
-*/
-//CHESS.COM INSPIRED THEME
-const whitePieceColour = "#f0f0f0";
-const blackPieceColour = "#454441";
-const moveHighlightColour = "#c4c4c4";
-const selfHighlightColour = "#c4c4c4";
-const boardFrameColour = "#a1a1a1";
-const whiteBoardColour = "#e6e8c6";
-const blackBoardColour = "#658544";
+let whitePieceColour = "#ffffff";
+let blackPieceColour = "#525252";
+let moveHighlightColour = "#c4c4c4";
+let selfHighlightColour = "#c4c4c4";
+let boardFrameColour = "#d19826";
+let whiteBoardColour = "#ffffff";
+let blackBoardColour = "#1f1f1f";
+const url = new URL(window.location.href);
+const theme = (_a = url.searchParams.get("theme")) === null || _a === void 0 ? void 0 : _a.toLowerCase(); //shadows are on by default, //you can turn shadows on or off by adding shadows=true / shadows=false in the url parameters
+if (theme == "original") {
+    whitePieceColour = "#ffffff";
+    blackPieceColour = "#525252";
+    moveHighlightColour = "#c4c4c4";
+    selfHighlightColour = "#c4c4c4";
+    boardFrameColour = "#ebae36";
+    whiteBoardColour = "#ffffff";
+    blackBoardColour = "#1f1f1f";
+}
+else { //CHESS.COM THEME (Default)
+    whitePieceColour = "#f0f0f0";
+    blackPieceColour = "#454441";
+    moveHighlightColour = "#c4c4c4";
+    selfHighlightColour = "#c4c4c4";
+    boardFrameColour = "#a1a1a1";
+    whiteBoardColour = "#e6e8c6";
+    blackBoardColour = "#658544";
+}
 //Piece Classes and Functions
 const setColour = (body, colour) => {
     for (let i = 0; i != body.faces.length; i += 1) {
@@ -153,7 +163,6 @@ class Piece {
     }
     setupObject(scale) {
         //seems to be a large performance increase when you disable outlines
-        const url = new URL(window.location.href);
         const outlines = url.searchParams.get("2doutlines"); //shadows are on by default, //you can turn shadows on or off by adding shadows=true / shadows=false in the url parameters
         if (outlines == "true") {
             this.body.showOutline = false;
