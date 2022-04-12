@@ -15,7 +15,7 @@ const getFaceClicked = (mouseX: number, mouseY: number) => {
         const [p1, p2, p3, p4] = [chessboardPoints.getColumn(p1Index), chessboardPoints.getColumn(p2Index), chessboardPoints.getColumn(p3Index), chessboardPoints.getColumn(p4Index)];
         //find average of points to get center
         const [totalX, totalY, totalZ] = [p1[0] + p2[0] + p3[0] + p4[0], p1[1] + p2[1] + p3[1] + p4[1], p1[2] + p2[2] + p3[2] + p4[2]];
-        const [averageX, averageY, averageZ] = [totalX / 4, totalY / 4, totalZ / 4];
+        const [averageX, averageY, averageZ] = [(totalX / 4) * dpi, (totalY / 4) * dpi, (totalZ / 4) * dpi];
         boardFaces.push( { square: faceSquares[i], center: [averageX, averageY, averageZ] } );
     }
 
