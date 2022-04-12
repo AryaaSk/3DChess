@@ -154,7 +154,7 @@ document.getElementById("renderingWindow").onclick = ($e) => {
                 }
                 //after switching colours, check if the currentColour's king is in check, this means the other person has put the king in check
                 if (kingInCheck(currentMove) == true) {
-                    updateTempText(`${currentMove} is in check`, 1000000);
+                    updateTempText(`${currentMove} is in check`, 10000);
                     let boardBefore = Object.assign({}, board); //need to copy board, not create a reference, so we can revert the changes that we make
                     const revertChanges = () => { board = Object.assign({}, boardBefore); };
                     //if you know that you are in check, you need to check if you are in checkmate
@@ -203,7 +203,7 @@ document.getElementById("renderingWindow").onclick = ($e) => {
                     }
                 }
                 else {
-                    updateTempText(``, 10);
+                    //updateTempText(``, 10);
                 }
             }
             updateCurrentMove();
