@@ -65,6 +65,15 @@ This is what the Queen and ChessboardTop look like in the Shape Builder, there i
   <img src="https://github.com/AryaaSk/3DChess/blob/master/Previews/ChessboardTop.png?raw=true" width="500"/>
 </p>
 
+### 3D Positioning and Movement
+- To convert a chess square position such as A1 or E7, into an actual 3D position in the world, I just used a simple formula:
+    1. First I converted the Square into a column and row, for example, A1 is of column 0 and row 0, E7 is column 4, row 6.
+    2. Then, since I know that the length and width of the chessboard is just going to be (800 * chessboard.scale), I can find the position of the piece using **((column or row) - 4) * 100 * chessboard.scale. This gives me the coordintes of the bottom-left corner of the square in the 3D world.
+    3. Then to find the center of the square I just add (100 * chessboard.scale) to the X and Z coordinates. The height of the board remains at constant 100, so to position the piece on top of the board I set the Y to 50.
+    - When modelling the pieces, I made sure to center the pieces on the X and Z axis, but not the Y axis, so that all pieces would be consistent, and I wouldn't have to do a calculation to find the Y axis based on the object's/piece's height.
+
+- The 3D movement such as rotating the board, moving the board, and zooming in/out, is all handled by my 3D Library, I just called the  enabledMovementControls() function, however I did modify it a little to trigger on pointer events, rather than mouse events. I will have to change that in the original source code as well, since you need to use pointer events to be able to use the controls on mobile as well.
+
 ## Performance
 Unfortunately I have realised that performance is an issue, since there are so many faces and points to calculate. I believe the main reason is because every pawn contains a sphere in it's model, which is the most demanding shape, so I could replce the sphere with a cube, to improve performance.
 
@@ -74,8 +83,8 @@ Here is the old pawn (sphere top), with the new one (square top), it improves pe
   <img src="https://github.com/AryaaSk/3DChess/blob/master/Previews/ChessPawnSimple.png?raw=true" width="250"/>
 </p>
 
-Although that did not help much, I made some other improvements to performance:
-- I modified the source code of the 3D engine a little bit, as well as the rendering loop. It now uses requestAnimationFrame(), and I also have a variable called changeInState, which is a boolean. Every time there is a user interaction, such as dragging the mouse or clicking something, changeInState is set to true at the end of the function. Then in the animation loop, it only renders a new frame if changeInState == true, and then once it has rendered the frame it sets the changeInState back to false. **This helps performance by a few FPS**.
+Although that did not help much, I made some other improvements to performance by **modifying the source code of my 3D engine for this project**:
+- It now uses requestAnimationFrame(), and I also have a variable called changeInState, which is a boolean. Every time there is a user interaction, such as dragging the mouse or clicking something, changeInState is set to true at the end of the function. Then in the animation loop, it only renders a new frame if changeInState == true, and then once it has rendered the frame it sets the changeInState back to false. **This helps performance by a few FPS**.
 
 - I have singled the problem out to be because I am trying to do **too many operations on the canvas at once**, when I only draw the border lines, or only draw the faces, then it is fine. The solution is probably to use 2 canvases, 1 for the main faces, and 1 for the outlines. Then all calls to the drawLine function will actually draw to the second canvas.
     - After trying to use 2 canvasas, I realised that I needed it all to be rendered on a single canvas, since the lines are rendered with the face, so that they get ovrritten by another face which is layered on top of it. This means I need to try and improve the performance while still using a single canvas.
