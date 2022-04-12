@@ -140,6 +140,7 @@ document.getElementById("renderingWindow").onclick = ($e) => {
                 alert("Cannot move there since your king will still be in check");
                 board = Object.assign({}, boardBeforeMove); //revert change
                 updateBoardPieces();
+                avaialableSquares = calculateAvailableMoves(board[selectedPiece].type, selectedPiece, currentMove);
             }
             else {
                 if (pieceAtSelectedSquare != undefined) {
