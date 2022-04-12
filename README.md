@@ -3,10 +3,10 @@
 I modified my library a little bit here, just to fit the needs of this project better
 
 ## How to play
+URL: https://aryaask.github.io/3DChess/index.html
+
 It is just like regular chess, but 3D, you can use the mouse to look around the board and zoom in/out.\
 **The game may have some bugs here and there, since I was more focused on the 3D aspect rather than the actual gameplay**
-
-I hosted the game on Github Pages: https://aryaask.github.io/3DChess/index.html
 
 Here are some previews of the game:
 ![Preview 1](https://github.com/AryaaSk/3DChess/blob/master/Previews/ChessPreview1.png?raw=true)
